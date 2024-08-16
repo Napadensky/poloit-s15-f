@@ -1,0 +1,43 @@
+[
+    {
+      "_id": "64daef7e1c5b0a6a2c5a6b1f",
+      "name": "JavaScript"
+    },
+    {
+      "_id": "64daef7e1c5b0a6a2c5a6b20",
+      "name": "React"
+    },
+    {
+      "_id": "64daef7e1c5b0a6a2c5a6b21",
+      "name": "Node.js"
+    },
+    {
+      "_id": "64daef7e1c5b0a6a2c5a6b22",
+      "name": "MongoDB"
+    },
+    {
+      "_id": "64daef7e1c5b0a6a2c5a6b23",
+      "name": "DevOps"
+    },
+    {
+      "_id": "64daef7e1c5b0a6a2c5a6b24",
+      "name": "Cloud Computing"
+    },
+    {
+      "_id": "64daef7e1c5b0a6a2c5a6b25",
+      "name": "Cybersecurity"
+    },
+    {
+      "_id": "64daef7e1c5b0a6a2c5a6b26",
+      "name": "Data Science"
+    },
+    {
+      "_id": "64daef7e1c5b0a6a2c5a6b27",
+      "name": "Machine Learning"
+    },
+    {
+      "_id": "64daef7e1c5b0a6a2c5a6b28",
+      "name": "Artificial Intelligence"
+    }
+  ]
+  
