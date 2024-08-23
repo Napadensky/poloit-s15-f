@@ -1,12 +1,6 @@
-import '../styles/App.css';
-
 const CurseDescription = () => {
   return (
     <div className='w-screen h-screen bg-white'>
-    
-      <nav className='w-screen mt-4 flex justify-start items-center h-auto bg-white text-black relative shadow-sm border-y-2 border-black py-4'>
-        <a href='/' className='text-center text-2xl text-gray-800 ml-8 font-extrabold bg-gray-200 px-10 py-1 hover:text-gray-800'>polo it</a>
-      </nav>
 
       <main className='w-full p-10 flex flex-col justify-center md:flex-row'>
         <div className='w-full md:w-2/5 md:h-60 mx-auto bg-gray-200'>
