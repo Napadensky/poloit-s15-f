@@ -11,10 +11,10 @@ const CurseDescription = () => {
         <h3 className='font-bold text-lg text-start mt-6'>DURACIÓN</h3>
         <p className='font-normal text-sm text-start mt-6'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nulla soluta iste repellat eum sequi officia expedita unde aperiam voluptatum! Quis assumenda cupiditate voluptatem, excepturi voluptas accusamus atque perferendis architecto. Dolor? Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusantium commodi illum quasi voluptas numquam, cum, adipisci reprehenderit neque enim eveniet fugit, molestias blanditiis laudantium iusto aliquam optio ut aperiam!</p>
 
-        <button className='rounded-none border-gray-600 text-lg	bg-gray-300 mt-8 py-3 focus:outline-none'>Inscribirme ahora</button>
+        <button className='rounded-none border-gray-600 text-lg	bg-gray-300 mt-8 py-3 px-2 focus:outline-none'>Inscribirme ahora</button>
       </main>
     </div>
   );
 };
 
-export default CurseDescription;
+export { CurseDescription };
