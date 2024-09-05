@@ -7,7 +7,7 @@ const Home = () => {
 
     return (
         <>      
-            <Navbar />
+           
             <section className="flex flex-col justify-center items-center mx-auto my-4 p-2 gap-4">
                
                 <Card />
