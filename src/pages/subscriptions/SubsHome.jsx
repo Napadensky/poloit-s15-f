@@ -1,9 +1,9 @@
+
 import Card from "@/components/Card";
-import { Navbar } from "@/components/Navbar";
 import { SearchBar } from "@/components/SearchBar";
 
 
-const Home = () => {
+const SubsHome = () => {
 
     return (
         <>      
@@ -21,4 +21,4 @@ const Home = () => {
     );
   };
 
-  export {Home};
+  export {SubsHome};
