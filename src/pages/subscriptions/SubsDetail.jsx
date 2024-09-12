@@ -1,4 +1,4 @@
-const CurseDescription = () => {
+const SubsDetail = () => {
   return (
     <div>
       <main className='w-full p-10 flex flex-col justify-center'>
@@ -17,4 +17,4 @@ const CurseDescription = () => {
   );
 };
 
-export { CurseDescription };
+export { SubsDetail };
