@@ -37,7 +37,7 @@ export const SubsInputField = (props) => {
       </label>
       <input
         {...inputPorps}
-        ref={inputRef}
+        // ref={inputRef}
         type={type}
         id={id}
         placeholder={placeholder}
