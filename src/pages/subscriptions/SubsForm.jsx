@@ -1,4 +1,5 @@
 import { SubsInputField } from '@/components/SubsInputField';
+import { SubsInputSelect } from '@/components/SubsInputSelect';
 
 const SubsForm = () => {
   return (
@@ -53,18 +54,31 @@ const SubsForm = () => {
           Atributos de Perfil
         </h2>
 
-        <SubsInputField
-          placeholder={'Ingrese su rol'}
+        <SubsInputSelect
+          placeholder={'Seleccione su rol'}
           textLabel={'Rol'}
           type={'text'}
           id={'rol'}
+          options={['Diseño UX UI', 'Testing QA', 'Frontend', 'Backend']}
         />
 
-        <SubsInputField
-          placeholder={'Ingrese el nombre de su ONG'}
+        <SubsInputSelect
+          placeholder={'Seleccione el nombre de su ONG'}
           textLabel={'Ong'}
           type={'text'}
           id={'ong'}
+          options={['Talento tech', 'Silver tech', 'Forge']}
+        />
+
+        
+           
+          
+       
+        <SubsInputField
+          placeholder={'Ingrese link de constancia'}
+          textLabel={'Link de constancia'}
+          type={'text'}
+          id={'link'}
         />
 
         <div className='flex justify-between'>
