@@ -1,4 +1,5 @@
 import { SubsInputField } from '@/components/SubsInputField';
+import { SubsInputSelect } from '@/components/SubsInputSelect';
 
 const SubsForm = () => {
   return (
@@ -53,31 +54,40 @@ const SubsForm = () => {
           Atributos de Perfil
         </h2>
 
-        <SubsInputField
-          placeholder={'Ingrese su rol'}
+        <SubsInputSelect
+          placeholder={'Seleccione su rol'}
           textLabel={'Rol'}
           type={'text'}
           id={'rol'}
+          options={['Diseño UX UI', 'Testing QA', 'Frontend', 'Backend']}
         />
 
-        <SubsInputField
-          placeholder={'Ingrese el nombre de su ONG'}
+        <SubsInputSelect
+          placeholder={'Seleccione el nombre de su ONG'}
           textLabel={'Ong'}
           type={'text'}
           id={'ong'}
+          options={['Talento tech', 'Silver tech', 'Forge']}
         />
 
-        <div className='flex justify-between'>
+        <SubsInputField
+          placeholder={'Ingrese link de constancia'}
+          textLabel={'Link de constancia'}
+          type={'text'}
+          id={'link'}
+        />
+
+        <div className='flex justify-between gap-4'>
           <button
             type='button'
-            className='focus:shadow-outline text-blue hover:bg-[#71AJD6]focus:outline-none rounded-xl border border-blue-500 px-4 py-2 focus:bg-[#F4F5F6]'
+            className='focus:shadow-outline text-blue hover:bg-[#71AJD6]focus:outline-none w-full rounded-xl border border-blue-500 px-4 py-2 focus:bg-[#F4F5F6]'
           >
             Cancelar
           </button>
 
           <button
             type='submit'
-            className='focus:shadow-outline hover:bg-[#71AJD6]focus:outline-none rounded-xl bg-[#2F68A1] px-4 py-2 font-bold text-white focus:bg-[#2F68A1]'
+            className='focus:shadow-outline hover:bg-[#71AJD6]focus:outline-none w-full rounded-xl bg-[#2F68A1] px-4 py-2 font-bold text-white focus:bg-[#2F68A1]'
           >
             Inscribirme
           </button>
