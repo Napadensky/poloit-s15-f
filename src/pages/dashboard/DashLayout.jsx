@@ -1,14 +1,19 @@
-import { SubsNavbar } from "@/components/SubsNavbar";
+import { DashNavbar } from "@/components/DashNavBar";
 import { Outlet } from "react-router-dom";
 
 const DashLayout = () => {
     return(
-        <div className='flex h-screen flex-row'>
-            <SubsNavbar className='mb-0 w-auto'/>
-            <main className='m-auto w-11/12'>
-                <Outlet />
-            </main>
-        </div>
+        <>  
+            <DashNavbar className='mb-0 w-auto'/>
+            <div className='flex h-screen flex-row'>
+                <div className='w-2/12 bg-slate-600'>
+                     <h1>SideBar</h1>  
+                </div>                    
+                <main className='m-auto w-10/12'>
+                    <Outlet />
+                </main>
+            </div>
+        </>
     );
 };
 

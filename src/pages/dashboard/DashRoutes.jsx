@@ -1,6 +1,8 @@
 import { useRoutes } from 'react-router-dom';
 import { DashLayout } from './DashLayout';
 import { DashHome } from './DashHome';
+import { DashProjectDetail } from './dashProject/DashProjectDetail';
+import { DashProjectNew } from './dashProject/DashProjectNew';
 
 const DashRoutes = () => {
   const routes = useRoutes([
@@ -8,6 +10,8 @@ const DashRoutes = () => {
       element: <DashLayout />,
       children: [
         { path: '', element: <DashHome />, index: true },
+        { path: '/project/:id', element: <DashProjectDetail /> },
+        { path: '/project/new', element: <DashProjectNew /> },
         { path: '*', element: <h1>Not Found</h1> },
       ],
     },
