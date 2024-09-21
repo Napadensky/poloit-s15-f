@@ -1,21 +1,28 @@
-import { DashNavbar } from "@/components/DashNavBar";
-import { Outlet } from "react-router-dom";
-
+import { DashNavbar } from '@/components/DashNavBar';
+import { useState } from 'react';
+import { Outlet } from 'react-router-dom';
 
 const DashLayout = () => {
-    return(
-        <>  
-            <DashNavbar className='mb-0 w-auto'/>
-            <div className='flex h-screen flex-row'>
-                <div className='lg:w-2/12 hidden  bg-slate-600'>
-                     <h1>SideBar</h1>  
-                </div>                    
-                <main className='m-auto lg:w-10/12'>
-                    <Outlet />
-                </main>
-            </div>
-        </>
-    );
+  const [isSideBarVisible, setIsSideBarVisible] = useState(true);
+  return (
+    <div className='flex h-screen flex-col'>
+      <DashNavbar className='' setIsSideBarVisible={setIsSideBarVisible} />
+      <div className='flex flex-1 overflow-hidden'>
+        <aside
+          className={`w-64 border border-black bg-gray-100 p-4 transition-all duration-300 ease-in-out ${isSideBarVisible ? 'translate-x-0' : '-translate-x-full'} `}
+        >
+          {/* Contenido del sidebar */}
+          <h2 className='mb-4 text-xl font-bold'>Sidebar</h2>
+          {/* Agrega aquí los elementos del sidebar */}
+        </aside>
+        <main
+          className={`flex-1 overflow-auto border border-black p-8 transition-all duration-300 ease-in-out ${isSideBarVisible ? 'w-full' : 'ml-[-16rem] w-full'} `}
+        >
+          <Outlet />
+        </main>
+      </div>
+    </div>
+  );
 };
 
-export {DashLayout}
+export { DashLayout };
