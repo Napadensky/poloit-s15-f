@@ -2,12 +2,14 @@ import { Link } from 'react-router-dom';
 import logo from '../assets/polo-it 2.svg';
 
 const DashNavbar = (props) => {
-  const { setIsSideBarVisible } = props;
+  const { setIsSidebarVisible } = props;
   return (
     <div className='m-1 flex items-center lg:justify-between'>
       <div className='flex flex-1 justify-start xl:justify-start'>
-        <button onClick={() => setIsSideBarVisible((value) => !value)}
-        className='mr-4'>
+        <button
+          onClick={() => setIsSidebarVisible((value) => !value)}
+          className='mr-4'
+        >
           <svg
             xmlns='http://www.w3.org/2000/svg'
             width='24'
