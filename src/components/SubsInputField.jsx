@@ -6,7 +6,7 @@ const stylesFormLabel = 'text-sm font-semibold text-gray-600 mb-1';
 const stylesFromContainer = 'flex flex-col mb-4';
 
 export const SubsInputField = (props) => {
-  const { className, inputPorps, textLabel, placeholder, type, id, typeMask } =
+  const { className, inputProps, textLabel, placeholder, type, id, typeMask } =
     props;
 
   const getTypeMask = () => {
@@ -37,8 +37,8 @@ export const SubsInputField = (props) => {
         {textLabel}
       </label>
       <input
-        {...inputPorps}
-        ref={inputRef}
+        {...inputProps}
+        ref={typeMask && inputRef}
         type={type}
         id={id}
         placeholder={placeholder}
