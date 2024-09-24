@@ -1,7 +1,7 @@
 import { SubsInputField } from '@/components/SubsInputField';
 import { SubsInputSelect } from '@/components/SubsInputSelect';
 
-const SubsForm = () => {
+export const SubsForm = () => {
   return (
     <div className='mx-auto max-w-md rounded-lg bg-white p-8 shadow-md'>
       <p className='mb-4 text-gray-700'>
@@ -96,4 +96,4 @@ const SubsForm = () => {
     </div>
   );
 };
-export { SubsForm };
+

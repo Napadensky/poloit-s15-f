@@ -2,10 +2,10 @@ import { Outlet } from 'react-router-dom';
 
 const LoginLayout = () => {
   return (
-    <main className='grid h-screen w-screen place-content-center'>
+    <main className='flex h-screen items-center'>
       <Outlet />
     </main>
   );
 };
 
-export {LoginLayout}
+export { LoginLayout };
