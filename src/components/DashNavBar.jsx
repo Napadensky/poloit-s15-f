@@ -2,12 +2,12 @@ import { Link } from 'react-router-dom';
 import logo from '../assets/polo-it 2.svg';
 
 const DashNavbar = (props) => {
-  const { toogleSideBar } = props;
+  const { toggleSideBar } = props;
   return (
     <div className='m-1 flex items-center lg:justify-between'>
       <div className='flex flex-1 justify-start xl:justify-start'>
         <button
-          onClick={() => toogleSideBar((value) => !value)}
+          onClick={() => toggleSideBar((value) => !value)}
           className='mr-4'
         >
           <svg
