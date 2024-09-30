@@ -1,19 +1,87 @@
+import { DashInputField } from '@/components/DashInputField';
+import { DashInputCheckbox } from '@/components/DashInputCheckbox';
 import { useState } from 'react';
+import { createProject } from '@/services/projectServices';
 
 const DashProjectNew = () => {
-  const [selected, setSelected] = useState(null);
+  const [file, setFile] = useState(null);
+  const [project, setProject] = useState({
+    titulo: '',
+    descripcion: '',
+    imagen: '',
+    rol: '',
+    maxParticipantes: '',
+    fechaLimite: '',
+  });
+  const [selectedRoles, setSelectedRoles] = useState([]);
 
-  const handleSelect = (value) => {
-    setSelected(value);
+  const rolOptions = [
+    { value: 'uxui', text: 'UX UI' },
+    { value: 'backend', text: 'Backend' },
+    { value: 'frontend', text: 'Frontend' },
+    { value: 'testing', text: 'Testing QA' },
+  ];
+  const handleSelectRoles = (value) => {
+    setSelectedRoles(prevRoles => {
+      if (prevRoles.includes(value)) {
+        return prevRoles.filter(role => role !== value);
+      } else {
+        return [...prevRoles, value];
+      }
+    });
+    setProject(prevProject => ({
+      ...prevProject,
+      rol: selectedRoles.join(', ')
+    }));
   };
-
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setProject((prevProject) => ({
+      ...prevProject,
+      [name]: value,
+    }));
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const formData = new FormData();
+    Object.keys(project).forEach(key => {
+      if (key === 'imagen' && file) {
+        formData.append(key, file);
+      } else {
+        formData.append(key, project[key]);
+      }
+    });
+      const newProject = await createProject(formData);
+      console.log('Proyecto creado:', newProject);
+    } catch (error) {
+      console.error('Error al crear el proyecto:', error.message);
+    }
+  };
+    const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+     setFile(file);
+     setProject(prevProject => ({
+      ...prevProject,
+      imagen: file.name,
+      }));
+    }
+  };
+  const handleFileInput = (e) => {
+    handleFileChange(e);
+    handleChange(e);
+  };
   return (
     <div className='m-4 flex flex-col gap-3 text-neutral-800'>
       <h1 className='text-xl font-bold text-neutral-800 lg:hidden'>
         Crear proyecto
       </h1>
-      <form className='flex flex-col lg:flex-row lg:justify-between'>
-        <div className='hidden lg:flex lg:flex-col lg:w-5/12'>
+      <form
+        onSubmit={handleSubmit}
+        className='flex flex-col lg:flex-row lg:justify-between'
+      >
+        <div className='hidden lg:flex lg:w-5/12 lg:flex-col'>
           <div className='h-[22rem] w-[30rem] rounded-xl border border-dashed border-gray-300 bg-gray-100'>
             <label htmlFor='imagen' className='flex cursor-pointer px-56 pt-40'>
               <svg
@@ -31,173 +99,118 @@ const DashProjectNew = () => {
                   strokeLinejoin='round'
                 />
               </svg>
-            </label>  
-            <label htmlFor="imagen" className='flex cursor-pointer h-8 text-[#D3D7D9] px-44 justify-center'>Subir imagen</label>
+            </label>
+            <label
+              htmlFor='imagen'
+              className='flex h-8 cursor-pointer justify-center px-44 pb-36 text-[#D3D7D9]'
+            >
+              {file ? file.name : 'Subir imagen'}
+            </label>
             <input
               type='file'
               id='imagen'
               name='imagen'
               accept='.png, .jpg, .jpeg'
               className='hidden h-full w-full'
+              value={project.imagen}
+              onChange={handleFileInput}
+              required
             />
           </div>
-          <h2 className='my-4 text-lg font-medium'>
-              Descripción 
-            </h2>
-            <div>
-              <label
-                htmlFor='descripcion'
-                className='my-2 flex h-56 w-[30rem] rounded-xl border-0 bg-[#E7F0F8] px-4 py-24 align-middle text-sm font-medium text-gray-400'
-              >
-                Objetivos del proyecto y beneficios de la participación
-              </label>
-
-              <input
-                type='text'
-                id='descripcion'
-                name='descripcion'
-                className='hidden h-full w-full'
-              />
-            </div>
+          <DashInputField
+            id='descripcion'
+            type='text'
+            name='descripcion'
+            textLabel='Descripción'
+            labelClassName='my-4 text-lg font-medium'
+            placeholder='Objetivos del proyecto y beneficios de la participación'
+            inputClassName='my-2 cursor-pointer flex h-56 w-[30rem] rounded-xl border-0 bg-[#E7F0F8] px-4 py-24 align-middle text-sm font-medium text-gray-400'
+            value={project.descripcion}
+            onChange={handleChange}
+          />
         </div>
+        <div className='lg:flex lg:w-5/12 lg:flex-col'>
+          <h2 className='mb-4 hidden text-xl font-medium text-[#2F68A1] lg:block'>
+            Sobre el Proyecto
+          </h2>
+          <DashInputField
+            id='titulo'
+            type='text'
+            name='titulo'
+            value={project.titulo}
+            onChange={handleChange}
+            labelClassName='my-2 text-sm font-medium lg:hidden'
+            textLabel='¿Cuál es el título del Proyecto?'
+            inputClassName='lg:hidden my-2 w-full rounded-xl border-0 bg-[#E7F0F8] p-6'
+            placeholder='Ingresar título del proyecto'
+          />
+          <DashInputField
+            id='titulo'
+            type='text'
+            name='titulo'
+            labelClassName='hidden text-lg my-4 lg:block'
+            textLabel='Título del Proyecto'
+            inputClassName='hidden lg:block my-2 w-full rounded-xl border-0 bg-[#E7F0F8] p-6'
+            placeholder='Ingresar título del proyecto'
+            value={project.titulo}
+            onChange={handleChange}
+          />
 
-        <div className='lg:flex lg:flex-col lg:w-5/12'>
-          <div>
-            <h2 className='hidden lg:block text-xl mb-4 font-medium text-[#2F68A1]'>Sobre el Proyecto</h2>
-            <label
-              htmlFor='titulo'
-              className='my-2 text-sm font-medium lg:hidden'
-            >
-              ¿Cuál es el título del Proyecto?
-            </label>
-            <label htmlFor='titulo' className='hidden text-lg my-4 lg:block'>
-              Título del Proyecto
-            </label>
-            <input
-              type='text'
-              id='titulo'
-              name='titulo'
-              placeholder='Ingresar título del proyecto'
-              className='my-2 w-full rounded-xl border-0 bg-[#E7F0F8] p-6'
-            />
-          </div>
           <div className='flex flex-col lg:hidden'>
-            <h2 className='my-2 text-sm font-medium'>
-              Descripción de Proyecto
-            </h2>
-            <div>
-              <label
-                htmlFor='descripcion'
-                className='my-2 flex h-40 w-full rounded-xl border-0 bg-[#E7F0F8] px-4 py-6 align-top text-sm font-medium text-gray-400'
-              >
-                Objetivos del proyecto y beneficios de la participación
-              </label>
-
-              <input
-                type='text'
-                id='descripcion'
-                name='descripcion'
-                className='hidden h-full w-full'
-              />
-            </div>
-          </div>
-          <div>
-            <label
-              htmlFor='fecha'
-              className='my-2 text-sm font-medium lg:hidden'
-            >
-              ¿Cuál es la fecha límite de inscripción?
-            </label>
-            <label htmlFor='fecha' className='hidden my-4 text-lg font-medium lg:block'>
-              Fecha límite de inscripción
-            </label>
-            <input
-              type='date'
-              id='fecha'
-              name='fecha'
-              placeholder='dd/mm/aa'
-              className='my-2 mt-1 w-full rounded-xl border-0 bg-[#E7F0F8] p-6 text-gray-400'
+            <DashInputField
+              id='descripcion'
+              type='text'
+              name='descripcion'
+              textLabel='Descripción del Proyecto'
+              labelClassName='my-2 text-sm font-medium'
+              placeholder='Objetivos del proyecto y beneficios de la participación'
+              inputClassName='my-2 flex h-40 w-full rounded-xl border-0 bg-[#E7F0F8] px-4 py-6 align-top text-sm font-medium text-gray-400'
+              value={project.descripcion}
+              onChange={handleChange}
             />
           </div>
-
-          <fieldset className='my-4 flex flex-row justify-between gap-2'>
-            <legend className='my-4 lg:text-lg text-sm font-medium'>
-              ¿Qué Roles requiere el proyecto?
-            </legend>
-            <input
-              type='radio'
-              id='uxui'
-              name='roles'
-              value='uxui'
-              className='hidden'
-              checked={selected === 'uxui'}
-              onChange={() => handleSelect('uxui')}
-            />
-            <label
-              htmlFor='uxui'
-              className={`cursor-pointer rounded-xl px-5 py-3 text-[0.68rem] font-semibold ${selected === 'uxui' ? 'bg-[#2F68A1] text-neutral-50' : 'bg-[#E7F0F8] text-gray-600'}`}
-            >
-              UX UI
-            </label>
-            <input
-              type='radio'
-              id='backend'
-              name='roles'
-              value='backend'
-              className='hidden'
-              checked={selected === 'backend'}
-              onChange={() => handleSelect('backend')}
-            />
-            <label
-              htmlFor='backend'
-              className={`cursor-pointer rounded-xl px-5 py-3 text-[0.68rem] font-semibold ${selected === 'backend' ? 'bg-[#2F68A1] text-neutral-50' : 'bg-[#E7F0F8] text-gray-600'}`}
-            >
-              Backend
-            </label>
-            <input
-              type='radio'
-              id='frontend'
-              name='roles'
-              value='frontend'
-              className='hidden'
-              checked={selected === 'frontend'}
-              onChange={() => handleSelect('frontend')}
-            />
-            <label
-              htmlFor='frontend'
-              className={`cursor-pointer rounded-xl px-5 py-3 text-[0.68rem] font-semibold ${selected === 'frontend' ? 'bg-[#2F68A1] text-neutral-50' : 'bg-[#E7F0F8] text-gray-600'}`}
-            >
-              Frontend
-            </label>
-            <input
-              type='radio'
-              id='testing'
-              name='roles'
-              value='testing'
-              className='hidden'
-              checked={selected === 'testing'}
-              onChange={() => handleSelect('testing')}
-            />
-            <label
-              htmlFor='testing'
-              className={`cursor-pointer rounded-xl px-5 py-3 text-[0.68rem] font-semibold ${selected === 'testing' ? 'bg-[#2F68A1] text-neutral-50' : 'bg-[#E7F0F8] text-gray-600'}`}
-            >
-              Testing QA
-            </label>
-          </fieldset>
-
-          <div>
-            <label htmlFor='maximo' className='my-2 text-sm lg:text-lg lg:my-6 font-medium'>
-              ¿Cantidad máxima de inscriptos?
-            </label>
-            <input
-              type='number'
-              id='maximo'
-              name='maximo'
-              placeholder='Ingrese sólo números'
-              className='my-2 lg:my-4 mt-1 w-full rounded-xl border-0 bg-[#E7F0F8] p-6 text-gray-400'
-            />
-          </div>
+          <DashInputField
+            id='fechaLimite'
+            type='date'
+            name='fechaLimite'
+            labelClassName='my-2 text-sm font-medium lg:hidden'
+            textLabel='¿Cuál es la fecha límite de inscripción?'
+            inputClassName='lg:hidden my-2 mt-1 w-full rounded-xl border-0 bg-[#E7F0F8] p-6 text-gray-400'
+            placeholder='dd/mm/aa'
+            value={project.fechaLimite}
+            onChange={handleChange}
+          />
+          <DashInputField
+            id='fechaLimite'
+            type='date'
+            name='fechaLimite'
+            labelClassName='hidden my-4 text-lg font-medium lg:block'
+            textLabel='Fecha límite de inscripción'
+            inputClassName='hidden lg:block my-2 mt-1 w-full rounded-xl border-0 bg-[#E7F0F8] p-6 text-gray-400'
+            placeholder='dd/mm/aa'
+            value={project.fechaLimite}
+            onChange={handleChange}
+          />
+          <DashInputCheckbox
+            fieldsetClassName='my-4 flex flex-row justify-between gap-2'
+            legendClassName='my-4 lg:text-lg text-sm font-medium'
+            textLegend='¿Qué Roles requiere el proyecto?'
+            options={rolOptions}
+            name='roles'
+            selectedValues={selectedRoles}
+            handleSelect={handleSelectRoles}
+          />
+          <DashInputField
+            id='maxParticipantes'
+            type='number'
+            name='maxParticipantes'
+            labelClassName='my-2 text-sm lg:text-lg lg:my-6 font-medium'
+            textLabel='¿Cantidad máxima de inscriptos?'
+            inputClassName='my-2 lg:my-4 mt-1 w-full rounded-xl border-0 bg-[#E7F0F8] p-6 text-gray-400'
+            placeholder='Ingrese sólo números'
+            value={project.maxParticipantes}
+            onChange={handleChange}
+          />
           <div className='lg:hidden'>
             <h2 className='my-2 text-sm font-medium'>
               Subir imagen del proyecto
@@ -229,19 +242,21 @@ const DashProjectNew = () => {
                 name='imagen'
                 accept='.png, .jpg, .jpeg'
                 className='hidden h-full w-full'
+                onChange={handleFileInput}
+                required
               />
             </div>
           </div>
-          <div className='my-4 flex w-full lg:w-[28rem] flex-row justify-between'>
+          <div className='my-4 flex w-full flex-row justify-between lg:w-[28rem]'>
             <input
               type='reset'
               value='Cancelar'
-              className='w-40 lg:w-52 cursor-pointer rounded-xl border-2 border-[#DD5A6B] lg:border-[#2F68A1] bg-zinc-50 px-6 py-4 text-base font-semibold text-[#DD5A6B] lg:text-[#2F68A1]'
+              className='w-40 cursor-pointer rounded-xl border-2 border-[#DD5A6B] bg-zinc-50 px-6 py-4 text-base font-semibold text-[#DD5A6B] lg:w-52 lg:border-[#2F68A1] lg:text-[#2F68A1]'
             />
             <input
               type='submit'
               value='Crear proyecto'
-              className='lg:w-52 cursor-pointer rounded-xl bg-[#2F68A1] px-6 py-4 text-base font-semibold text-zinc-50'
+              className='cursor-pointer rounded-xl bg-[#2F68A1] px-6 py-4 text-base font-semibold text-zinc-50 lg:w-52'
             />
           </div>
         </div>

@@ -20,7 +20,7 @@ const DashNavbar = (props) => {
           </svg>
         </button>
         <Link to={'/'}>
-          <img src={logo} alt='Logo PoloIT' className='hover:brightness-200' />
+          <img src={logo} alt='Logo PoloIT' />
         </Link>
       </div>
 

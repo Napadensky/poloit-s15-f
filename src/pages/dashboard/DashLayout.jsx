@@ -6,7 +6,7 @@ const DashLayout = () => {
   const [isSideBarVisible, setIsSideBarVisible] = useState(true);
   return (
     <div className='flex h-screen flex-col'>
-      <DashNavbar className='' toogleSideBar={setIsSideBarVisible} />
+      <DashNavbar className='' toggleSideBar={setIsSideBarVisible} />
       <div className='flex flex-1 overflow-hidden'>
         <aside
           className={`w-64 border border-black bg-gray-100 p-4 transition-all duration-300 ease-in-out ${isSideBarVisible ? 'translate-x-0' : '-translate-x-full'} `}
