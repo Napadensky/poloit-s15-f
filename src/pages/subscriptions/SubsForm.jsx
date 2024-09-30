@@ -1,7 +1,39 @@
 import { SubsInputField } from '@/components/SubsInputField';
 import { SubsInputSelect } from '@/components/SubsInputSelect';
+import { useEnroll } from '../../hooks/useEnroll';
+
 
 export const SubsForm = () => {
+
+  const {enroll, loading, error, success } = useEnroll();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const enrollmentData = {
+      name: e.target.name.value,
+      dni: e.target.dni.value,
+      mail: e.target.email.value,
+      phone: e.target.phone.value,
+      active: true,
+      role: e.target.rol.value,
+      projects: e.target.projects,
+      assigned: false,
+    };
+    //      ong: e.target.ong.value,
+    //       link: e.target.link.value,
+
+
+
+    try {
+      await enroll(enrollmentData);
+      if (success) {
+        console.log("Inscripcion Exitosa")
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
   return (
     <div className='mx-auto max-w-md rounded-lg bg-white p-8 shadow-md'>
       <p className='mb-4 text-gray-700'>
@@ -10,16 +42,7 @@ export const SubsForm = () => {
       </p>
       <h2 className='mb text-xl font-bold text-blue-500'>Datos Personales</h2>
 
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          console.log('submit');
-          console.log({ e });
-          console.log(e.target.name.value);
-          console.log(e.target.dni.value);
-          console.log(e.target.phone.value);
-        }}
-      >
+      <form onSubmit={handleSubmit}>
         <SubsInputField
           placeholder={'Ingrese su nombre completo'}
           textLabel={'Nombre Completo'}
