@@ -1,9 +1,11 @@
 export const DashInputField = (props) => {
-    const { inputProps, textLabel,inputClassName, labelClassName, placeholder, type, id, name, value, onChange } = props;
+    const { inputProps, textLabelMobile,textLabelDesktop,inputClassName, labelClassName, placeholder, type, id, name, value, onChange } = props;
     return (
       <div>
         <label className={labelClassName} htmlFor={id}>
-          {textLabel}
+        <span className="lg:hidden">{textLabelMobile}</span>
+        <span className="hidden lg:inline">{textLabelDesktop}</span>
+     
         </label>
         <input
           {...inputProps}
@@ -12,9 +14,8 @@ export const DashInputField = (props) => {
           id={id}
           name={name}
           placeholder={placeholder}
-          className={inputClassName}
+          className={inputClassName}  
           onChange={onChange}
-          required
         />
       </div>
     );

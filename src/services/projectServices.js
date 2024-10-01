@@ -10,12 +10,19 @@ export const getProjects = async () => {
   }
 };
 
-export const createProject = async (project) => {
+export const createProject = async (projectData) => {
   try {
-    const response = await api.post('/projects', project);
+    console.log('Enviando datos del proyecto:', projectData);
+    const response = await api.post('/projects', projectData,{
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+    });
+    console.log('Respuesta del servidor:', response);
     return response.data;
   } catch (error) {
-    throw new Error('Error al crear el proyecto ' + error.message);
+    console.error('Error detallado:', error.response || error);
+    throw new Error(`Error al crear el proyecto: ${error.response?.data?.message || error.message}`);
   }
 };
 
