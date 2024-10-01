@@ -6,14 +6,15 @@ import { createProject } from '@/services/projectServices';
 const DashProjectNew = () => {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
-  const [project, setProject] = useState({
+  const InitialProject = {
     title: '',
     description: '',
     img: '',
     tag: [],
     maxStudents: '',
     schedules: '',
-  });
+  };
+  const [project, setProject] = useState(InitialProject);
 
   const rolOptions = [
     { value: 'uxui', text: 'UX UI' },
@@ -89,6 +90,11 @@ const DashProjectNew = () => {
       }));
     }
   };
+  const handleReset = () => {
+    setProject(InitialProject);
+    setFile(null);
+    setPreview(null);
+  };
    
   return (
     <div className='m-4 flex flex-col gap-3 text-neutral-800'>
@@ -141,7 +147,7 @@ const DashProjectNew = () => {
           />
 
           <DashInputCheckbox
-            className='my-4 flex flex-row justify-between gap-2'
+            className='my-4 flex flex-col justify-between gap-2'
             labelClassName='my-4 lg:text-lg text-sm font-medium'
             textLegend='¿Qué Roles requiere el proyecto?'
             options={rolOptions}
@@ -205,11 +211,13 @@ const DashProjectNew = () => {
             </div>
           </div>
           <div className='my-4 flex w-full flex-row justify-between lg:w-[28rem]'>
-            <input
-              type='reset'
-              value='Cancelar'
-              className='w-40 cursor-pointer rounded-xl border-2 border-[#DD5A6B] bg-zinc-50 px-6 py-4 text-base font-semibold text-[#DD5A6B] lg:w-52 lg:border-[#2F68A1] lg:text-[#2F68A1]'
-            />
+          <button
+        type='button'
+        onClick={handleReset}
+        className='w-40 cursor-pointer rounded-xl border-2 border-[#DD5A6B] bg-zinc-50 px-6 py-4 text-base font-semibold text-[#DD5A6B] lg:w-52 lg:border-[#2F68A1] lg:text-[#2F68A1]'
+      >
+        Cancelar
+      </button>
             <input
               type='submit'
               value='Crear proyecto'

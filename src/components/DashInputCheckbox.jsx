@@ -12,13 +12,13 @@ export const DashInputCheckbox = (props) => {
   return (
     <div className={className}>
       <p className={labelClassName}>{textLegend}</p>
-      <div className="flex flex-wrap gap-2">
-    {options?.map((option) => {
-     const { value, text } = option;
-     const isSelected = selectedValues.includes(value);
-      return (
-        <div key={`${name}-${value}`} >
-         <input 
+      <div className="flex flex-row gap-2">
+         {options?.map((option) => {
+          const { value, text } = option;
+         const isSelected = selectedValues.includes(value);
+         return (
+           <div key={`${name}-${value}`} className="flex flex-row gap-2"     >
+          <input 
          type="checkbox" 
          id={`${name}-${value}`} 
          className="hidden" 
@@ -26,7 +26,7 @@ export const DashInputCheckbox = (props) => {
          value={value} 
          checked={isSelected}
          onChange={() => handleSelect(value)}/>
-         <label 
+           <label 
           htmlFor={`${name}-${value}`} 
           className={`cursor-pointer rounded-xl px-5 py-3 text-[0.68rem] font-semibold ${
              isSelected
