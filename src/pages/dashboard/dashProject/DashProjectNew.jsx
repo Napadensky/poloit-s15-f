@@ -98,7 +98,7 @@ const DashProjectNew = () => {
         formData.append(key, updatedProject[key]);
       }
     });
-    try {
+    
       const newProject = await createProject(updatedProject);
 
       console.log('Proyecto creado:', newProject);
