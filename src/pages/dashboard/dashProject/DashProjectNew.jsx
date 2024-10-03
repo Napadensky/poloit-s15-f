@@ -81,11 +81,12 @@ const DashProjectNew = () => {
     setConfirmation(true);
   };
   const handleConfirmation = async () => {
-    setConfirmation(false);
-    const updatedProject = {
+    try {
+       const updatedProject = {
       ...project,
       active: true,
-    };
+       };
+    
     const formData = new FormData();
 
     Object.keys(updatedProject).forEach((key) => {
@@ -102,6 +103,7 @@ const DashProjectNew = () => {
 
       console.log('Proyecto creado:', newProject);
       setModal(true);
+      setConfirmation(false);
     } catch (error) {
       console.error('Error al crear el proyecto:', error);
     }
