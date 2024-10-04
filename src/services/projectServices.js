@@ -10,10 +10,13 @@ export const getProjects = async () => {
   }
 };
 
-export const createProject = async (projectData) => {
+export const createProject = async (formData) => {
   try {
-    console.log('Enviando datos del proyecto:', projectData);
-    const response = await api.post('/projects', projectData,{
+    console.log('Enviando datos del proyecto:', formData);
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value instanceof File ? value.name : value);
+    }
+    const response = await api.post('/projects', formData,{
       headers: {
         'Content-Type': 'multipart/form-data'
       },

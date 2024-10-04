@@ -1,5 +1,4 @@
 import { DashInputField } from '@/components/DashInputField';
-import { DashInputCheckbox } from '@/components/DashInputCheckbox';
 import { useEffect, useState } from 'react';
 import { createProject } from '@/services/projectServices';
 import { useNavigate } from 'react-router-dom';
@@ -13,61 +12,12 @@ const DashProjectNew = () => {
     modalidad: '',
     plataforma: '',
     precio: 0,
-    days: [],
-    startDate: '',
-    endDate: '',
-    startHour: '',
-    endHour: '',
-    duration: 0,
     img: '',
-    students: [],
     maxStudents: '',
     active: false,
   };
   const [project, setProject] = useState(InitialProject);
 
-  const rolOptions = [
-    { value: 'UX/UI', text: 'UX UI' },
-    { value: 'Backend', text: 'Backend' },
-    { value: 'Frontend', text: 'Frontend' },
-    { value: 'QA', text: 'Testing QA' },
-  ];
-  const scheduleOptions = [
-    { value: 'Lunes', text: 'Lunes' },
-    { value: 'Martes', text: 'Martes' },
-    { value: 'Miercoles', text: 'Miércoles' },
-    { value: 'Jueves', text: 'Jueves' },
-    { value: 'Viernes', text: 'Viernes' },
-    { value: 'Sábado', text: 'Sábado' },
-    { value: 'Domingo', text: 'Domingo' },
-  ];
-
-  const handleSelectRoles = (value) => {
-    setProject((prevProject) => {
-      const updatedTags = prevProject.students.includes(value)
-        ? prevProject.students.filter((student) => student !== value)
-        : [...prevProject.students, value];
-
-      const updatedProject = {
-        ...prevProject,
-        students: updatedTags,
-      };
-
-      return updatedProject;
-    });
-  };
-  const handleSelectSchedules = (value) => {
-    setProject((prevProject) => {
-      const updatedSchedules = prevProject.days.includes(value)
-        ? prevProject.days.filter((day) => day !== value)
-        : [...prevProject.days, value];
-
-      return {
-        ...prevProject,
-        days: updatedSchedules,
-      };
-    });
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -82,31 +32,32 @@ const DashProjectNew = () => {
   };
   const handleConfirmation = async () => {
     try {
-       const updatedProject = {
-      ...project,
-      active: true,
-       };
-    
-    const formData = new FormData();
-
-    Object.keys(updatedProject).forEach((key) => {
-      if (key === 'img' && file) {
-        formData.append(key, file);
-      } else if (key === 'students') {
-        formData.append(key, JSON.stringify(updatedProject[key]));
-      } else {
-        formData.append(key, updatedProject[key]);
+      if (!file) {
+        throw new Error('Por favor, selecciona una imagen para el proyecto.');
       }
-    });
     
-      const newProject = await createProject(updatedProject);
+      const formData = new FormData();
+
+      Object.keys(project).forEach((key) => {
+       if (key !== 'img') {
+        formData.append(key, project[key]);
+        }
+      });  
+      formData.append('img', file, file.name);
+      
+      formData.set('active','true');
+      console.log('Contenido de FormData:');
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value instanceof File ? value.name : value);
+    }
+      const newProject = await createProject(formData);
 
       console.log('Proyecto creado:', newProject);
       setModal(true);
       setConfirmation(false);
     } catch (error) {
-      console.error('Error al crear el proyecto:', error);
-    }
+        console.error('Error al crear el proyecto:', error);
+      }
   };
   const handleCloseModal = () => {
     setModal(false);
@@ -199,17 +150,7 @@ const DashProjectNew = () => {
             onChange={handleChange}
           />
         </div>
-        <div className='lg:order-5'>
-          <DashInputCheckbox
-            className='my-4 flex flex-col justify-between gap-2'
-            labelClassName='my-4 lg:text-lg text-sm font-medium'
-            textLegend='¿Qué Roles requiere el proyecto?'
-            options={rolOptions}
-            name='roles'
-            selectedValues={project.students}
-            handleSelect={handleSelectRoles}
-          />
-        </div>
+
         <div className='lg:order-7'>
           <DashInputField
             id='modalidad'
@@ -238,87 +179,8 @@ const DashProjectNew = () => {
             placeholder='Ingresar plataforma'
           />
         </div>
-        <div className='lg:order-8'>
-          <DashInputField
-            id='startDate'
-            type='date'
-            name='startDate'
-            labelClassName='my-2 lg:my-4 text-sm lg:text-lg font-medium'
-            textLabelMobile='¿Cuál es la fecha de inicio del Proyecto?'
-            textLabelDesktop='Fecha de inicio del Proyecto'
-            inputClassName='my-2  mt-1 w-full rounded-xl border-0 bg-[#E7F0F8] p-6'
-            placeholder='yyyy/mm/dd'
-            onChange={handleChange}
-            value={project.startDate}
-          />
-        </div>
-        <div className='lg:order-10'>
-          <DashInputField
-            id='endDate'
-            type='date'
-            name='endDate'
-            labelClassName='my-2 lg:my-4 text-sm lg:text-lg font-medium'
-            textLabelMobile='¿Cuál es la fecha de finalización del Proyecto?'
-            textLabelDesktop='Fecha de finalización del Proyecto'
-            inputClassName='my-2  mt-1 w-full rounded-xl border-0 bg-[#E7F0F8] p-6'
-            placeholder='yyyy/mm/dd'
-            onChange={handleChange}
-            value={project.endDate}
-          />
-        </div>
-        <div className='lg:order-12'>
-          <DashInputField
-            id='startHour'
-            type='text'
-            name='startHour'
-            value={project.startHour}
-            onChange={handleChange}
-            labelClassName='my-2 lg:my-4 text-sm lg:text-lg font-medium'
-            textLabelMobile='¿Cuál es la hora de inicio de las reuniones?'
-            textLabelDesktop='Hora de inicio de las reuniones'
-            inputClassName='my-2  w-full rounded-xl border-0 bg-[#E7F0F8] p-6'
-            placeholder='Ingresar hora de inicio'
-          />
-        </div>
-        <div className='lg:order-[14]'>
-          <DashInputField
-            id='endHour'
-            type='text'
-            name='endHour'
-            value={project.endHour}
-            onChange={handleChange}
-            labelClassName='my-2 lg:my-4 text-sm lg:text-lg font-medium'
-            textLabelMobile='¿Cuál es la hora de finalización de las reuniones?'
-            textLabelDesktop='Hora de finalización de las reuniones'
-            inputClassName='my-2  w-full rounded-xl border-0 bg-[#E7F0F8] p-6'
-            placeholder='Ingresar hora de finalización'
-          />
-        </div>
-        <div className='lg:order-[13] lg:-mt-8'>
-          <DashInputCheckbox
-            className='my-4 flex w-full flex-col justify-between gap-2'
-            labelClassName='my-4 flex-wrap  lg:text-lg text-sm font-medium'
-            textLegend='¿Qué días se realizará el proyecto?'
-            options={scheduleOptions}
-            name='schedules'
-            selectedValues={project.days}
-            handleSelect={handleSelectSchedules}
-          />
-        </div>
-        <div className='lg:order-[15]'>
-          <DashInputField
-            id='duration'
-            type='number'
-            name='duration'
-            value={project.duration}
-            onChange={handleChange}
-            labelClassName='my-2 lg:my-4 text-sm lg:text-lg font-medium'
-            textLabelMobile='¿Cuál es la duración de las reuniones?'
-            textLabelDesktop='Duración de las reuniones'
-            inputClassName='my-2  w-full rounded-xl border-0 bg-[#E7F0F8] p-6'
-            placeholder='Ingresar duración de las reuniones'
-          />
-        </div>
+        
+       
         <div className='lg:order-11'>
           <DashInputField
             id='precio'
