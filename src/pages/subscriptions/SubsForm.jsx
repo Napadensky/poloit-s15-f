@@ -94,7 +94,7 @@ export const SubsForm = () => {
           Atributos de Perfil
         </h2>
 
-        <SubsInputSelect className="text-red-500"
+        <SubsInputSelect
           placeholder={'Seleccione su rol'}
           textLabel={'Rol'}
           id={'rol'}
@@ -106,7 +106,6 @@ export const SubsForm = () => {
           ]}
         />
         <SubsInputSelect 
-        className="text-red-500"
         placeholder={'Seleccione un proyecto'}
         textLabel={'Proyecto'}
         id={'proyecto'}
