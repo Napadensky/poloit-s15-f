@@ -18,7 +18,6 @@ const DashProjectNew = () => {
   };
   const [project, setProject] = useState(InitialProject);
 
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProject((prevProject) => ({
@@ -35,29 +34,29 @@ const DashProjectNew = () => {
       if (!file) {
         throw new Error('Por favor, selecciona una imagen para el proyecto.');
       }
-    
+
       const formData = new FormData();
 
       Object.keys(project).forEach((key) => {
-       if (key !== 'img') {
-        formData.append(key, project[key]);
+        if (key !== 'img') {
+          formData.append(key, project[key]);
         }
-      });  
+      });
       formData.append('img', file, file.name);
-      
-      formData.set('active','true');
+
+      formData.set('active', 'true');
       console.log('Contenido de FormData:');
-    for (let [key, value] of formData.entries()) {
-      console.log(key, value instanceof File ? value.name : value);
-    }
+      for (let [key, value] of formData.entries()) {
+        console.log(key, value instanceof File ? value.name : value);
+      }
       const newProject = await createProject(formData);
 
       console.log('Proyecto creado:', newProject);
       setModal(true);
       setConfirmation(false);
     } catch (error) {
-        console.error('Error al crear el proyecto:', error);
-      }
+      console.error('Error al crear el proyecto:', error);
+    }
   };
   const handleCloseModal = () => {
     setModal(false);
@@ -66,7 +65,7 @@ const DashProjectNew = () => {
   const handleCancelar = () => {
     setConfirmation(false);
   };
-  
+
   useEffect(() => {
     if (file) {
       const reader = new FileReader();
@@ -179,8 +178,7 @@ const DashProjectNew = () => {
             placeholder='Ingresar plataforma'
           />
         </div>
-        
-       
+
         <div className='lg:order-11'>
           <DashInputField
             id='precio'
@@ -254,22 +252,24 @@ const DashProjectNew = () => {
         </div>
       </form>
       {confirmation && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-8 rounded-lg">
-            <h2 className="text-xl font-bold mb-4">
-              Estás a punto de crear un proyecto</h2>
-            <p className="mb-4">
-            ¿Desea cargar proyecto?</p>
-            <div className="flex justify-end space-x-4">
+        <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
+          <div className='rounded-lg border-2 border-zinc-500 bg-[#F4F5F6] p-8'>
+            <h2 className='mb-4 text-base font-semibold text-[#262A2C]'>
+              Estás a punto de crear un proyecto
+            </h2>
+            <p className='mb-4 text-sm font-normal text-[#4B5358]'>
+              ¿Desea cargar proyecto?
+            </p>
+            <div className='flex justify-end space-x-4'>
               <button
                 onClick={handleCancelar}
-                className="bg-gray-300 text-black px-4 py-2 rounded"
+                className='bg-transparent px-4 py-2 text-sm font-medium text-[#CD1D1D] underline'
               >
                 Cancelar
               </button>
               <button
                 onClick={handleConfirmation}
-                className="bg-[#2F68A1] text-white px-4 py-2 rounded"
+                className='bg-transparent px-4 py-2 text-sm font-medium text-[#60B635] underline'
               >
                 Aceptar
               </button>
@@ -278,22 +278,31 @@ const DashProjectNew = () => {
         </div>
       )}
       {modal && (
-        <div className='fixed inset-0 flex items-center justify-center bg-black   bg-opacity-50'>
-          <div className='bg-white p-8 rounded-lg'>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
+        <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
+          <div className='flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-[#60B635] bg-[#F0F9EB] p-8'>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              viewBox='0 0 24 24'
+              fill='#60B635'
+              className='size-6'
+            >
               <path
                 fillRule='evenodd'
                 d='M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z'
                 clipRule='evenodd'
               />
             </svg>
-            <h2 className='text-xl font-bold mb-4'>¡Proyecto creado correctamente!</h2>
-            <p className='text-sm mb-4'>Ya podes visualizar el proyecto.</p>
-            <button 
+            <h2 className='mb-4 text-base font-semibold text-[#262A2C]'>
+              ¡Proyecto creado correctamente!
+            </h2>
+            <p className='mb-4 mr-auto text-sm font-normal text-[#4B5358]'>
+              Ya podes visualizar el proyecto.
+            </p>
+            <button
               onClick={handleCloseModal}
-              className='mt-4 bg-blue-500 text-white px-4 py-2 rounded'
+              className='ml-auto bg-transparent px-4 py-2 text-[#3A6F20] underline'
             >
-              Cerrar
+              Continuar
             </button>
           </div>
         </div>

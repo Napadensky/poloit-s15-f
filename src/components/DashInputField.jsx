@@ -14,7 +14,7 @@ export const DashInputField = (props) => {
           id={id}
           name={name}
           placeholder={placeholder}
-          className={inputClassName}  
+          className={`${inputClassName} focus:outline-none`}  
           onChange={onChange}
         />
       </div>
