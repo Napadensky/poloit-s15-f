@@ -1,7 +1,56 @@
 import { SubsInputField } from '@/components/SubsInputField';
 import { SubsInputSelect } from '@/components/SubsInputSelect';
+import { useEnroll } from '../../hooks/useEnroll';
+import { useProject } from '../../hooks/useProject';
+import { useSendEmail } from '../../hooks/useEmail'; 
+import { useState } from 'react';
+
 
 export const SubsForm = () => {
+  const { projects, loading: loadingProjects, error: errorProjects, fetchProjects } = useProject(); 
+
+  const {enroll, loading, error, success } = useEnroll();
+  const { triggerEmail } = useSendEmail(); 
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    const enrollmentData = {
+      name: e.target.name.value,
+      dni: e.target.dni.value,
+      mail: e.target.email.value,
+      phone: e.target.phone.value,
+      role: e.target.rol.value,
+      projects: e.target.proyecto.value,
+      ong: e.target.ong.value,
+      link: e.target.link.value
+    };
+  
+    try {
+      const result = await enroll(enrollmentData); // Guarda la inscripción
+      console.log("Resultado de la inscripción:", result);
+
+      console.log(enrollmentData.mail)
+  
+      // Solo envía el correo si la inscripción fue exitosa
+      if (result) {
+        const emailData = {
+          to: enrollmentData.mail,
+          subject: 'Inscripción Exitosa',
+          text: `Hola ${enrollmentData.name},\n\nTu inscripción ha sido exitosa. Ya sos parte de PoloIT, te haremos llegar los detalles cuando termine el periodo de inscripcion.`
+        };
+        await triggerEmail(emailData); // Envía el correo
+        setShowSuccessPopup(true);
+        e.target.reset(); // Limpia el formulario
+      }
+    } catch (err) {
+      console.log("Error al inscribir:", err);
+    }
+  };
+  
   return (
     <div className='mx-auto max-w-md rounded-lg bg-white p-8 shadow-md'>
       <p className='mb-4 text-gray-700'>
@@ -10,16 +59,7 @@ export const SubsForm = () => {
       </p>
       <h2 className='mb text-xl font-bold text-blue-500'>Datos Personales</h2>
 
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          console.log('submit');
-          console.log({ e });
-          console.log(e.target.name.value);
-          console.log(e.target.dni.value);
-          console.log(e.target.phone.value);
-        }}
-      >
+      <form onSubmit={handleSubmit}>
         <SubsInputField
           placeholder={'Ingrese su nombre completo'}
           textLabel={'Nombre Completo'}
@@ -57,17 +97,33 @@ export const SubsForm = () => {
         <SubsInputSelect
           placeholder={'Seleccione su rol'}
           textLabel={'Rol'}
-          type={'text'}
           id={'rol'}
-          options={['Diseño UX UI', 'Testing QA', 'Frontend', 'Backend']}
+          options={[
+            {text:'UX-UI' ,value:"UX/UI"},
+            {text:'QA' ,value:"QA"},
+            {text:'Frontend' ,value:"Frontend"},
+            {text:'Backend',value:"Backend"},
+          ]}
         />
+        <SubsInputSelect 
+        placeholder={'Seleccione un proyecto'}
+        textLabel={'Proyecto'}
+        id={'proyecto'}
+        options={projects.map(project => ({
+          text: project.title,
+          value: project._id, // Usar el ID de MongoDB
+        }))}
+       />
 
         <SubsInputSelect
           placeholder={'Seleccione el nombre de su ONG'}
           textLabel={'Ong'}
-          type={'text'}
           id={'ong'}
-          options={['Talento tech', 'Silver tech', 'Forge']}
+          options={[
+            {text:'Talento tech' ,value:"Talento tech"},
+            {text:'Silver tech' ,value:"Silver tech"},
+            {text:'Forge' ,value:"Forge"},
+          ]}
         />
 
         <SubsInputField
@@ -93,7 +149,22 @@ export const SubsForm = () => {
           </button>
         </div>
       </form>
-    </div>
+  
+
+  {showSuccessPopup && (
+      <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
+        <div className="bg-white p-5 rounded shadow-lg">
+          <h2 className="text-lg font-bold text-green-600">Inscripción Exitosa</h2>
+          <p>Tu inscripción ha sido realizada con éxito. Revisa tu correo para más información.</p>
+          <button 
+            className="mt-4 bg-blue-500 text-white px-4 py-2 rounded"
+            onClick={() => setShowSuccessPopup(false)}
+          >
+            Cerrar
+          </button>
+        </div>
+      </div>
+      )}
+      </div>
   );
 };
-
