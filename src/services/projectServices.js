@@ -3,7 +3,7 @@ import { api } from "./api";
 
 export const getProjects = async () => {
   try {
-    const response = await api.get('/api/projects');
+    const response = await api.get('/projects');
     return response.data;
   } catch (error) {
     throw new Error('Error al obtener los proyectos ' + error.message);

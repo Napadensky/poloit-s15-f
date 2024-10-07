@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getProjects } from '../services/projServices';
+import { getProjects } from '../services/projectServices';
 
 export const useProject = () => {
   const [loading, setLoading] = useState(false);
