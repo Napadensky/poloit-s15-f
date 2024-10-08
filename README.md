@@ -25,7 +25,6 @@
    ```
 
    Esto leerá el archivo `package.json` y descargará todas las librerías y paquetes que el proyecto necesita.
-   
 
 4. **Ejecutar el Proyecto**
 
@@ -34,4 +33,3 @@
    ```
    npm run dev
    ```
-

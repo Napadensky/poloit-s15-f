@@ -1,9 +1,8 @@
-
-import '@/styles/App.css'
+import '@/styles/App.css';
 import { MapRoutes } from './routes/Routes';
 
-const App = () => {  
-  return <MapRoutes/>;
+const App = () => {
+  return <MapRoutes />;
 };
 
-export {App}
+export { App };

@@ -1,4 +1,3 @@
-
 import { useMask } from '@react-input/mask';
 
 const stylesFormInput = 'flex items-center rounded-2xl bg-gray-300 p-4';
