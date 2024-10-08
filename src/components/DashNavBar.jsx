@@ -26,7 +26,7 @@ const DashNavbar = (props) => {
 
       <div className='m-1 hidden justify-center p-1 lg:flex'>
         <Link to={'/login'}>
-          <button className='m-1 h-12 w-48 rounded-xl bg-[#DD5A6B] text-white'>
+          <button className='m-1 h-9 w-48 rounded-xl bg-[#DD5A6B] text-white'>
             Iniciar sesión
           </button>
         </Link>
