@@ -24,4 +24,3 @@ export const useEnroll = () => {
 
   return { enroll, loading, error, success };
 };
-

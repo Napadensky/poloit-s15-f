@@ -1,30 +1,30 @@
 [
-    {
-      "name": "John Doe",
-      "mail": "johndoe@example.com",
-      "phone": "+1 (123) 456-7890",
-      "dni": 12345678,
-      "active": true
-    },
-    {
-      "name": "Jane Smith",
-      "mail": "janesmith@example.com",
-      "phone": "+44 (777) 888-9999",
-      "dni": 87654321,
-      "active": false
-    },
-    {
-      "name": "Emily Brown",
-      "mail": "emilybrown@example.com",
-      "phone": "+61 (4) 1234 5678",
-      "dni": 98765432,
-      "active": false
-    },
-    {
-      "name": "David Lee",
-      "mail": "davidlee@example.com",
-      "phone": "+33 (0) 123 45 67 89",
-      "dni": 111222333,
-      "active": true
-    }
-  ]
+  {
+    "name": "John Doe",
+    "mail": "johndoe@example.com",
+    "phone": "+1 (123) 456-7890",
+    "dni": 12345678,
+    "active": true
+  },
+  {
+    "name": "Jane Smith",
+    "mail": "janesmith@example.com",
+    "phone": "+44 (777) 888-9999",
+    "dni": 87654321,
+    "active": false
+  },
+  {
+    "name": "Emily Brown",
+    "mail": "emilybrown@example.com",
+    "phone": "+61 (4) 1234 5678",
+    "dni": 98765432,
+    "active": false
+  },
+  {
+    "name": "David Lee",
+    "mail": "davidlee@example.com",
+    "phone": "+33 (0) 123 45 67 89",
+    "dni": 111222333,
+    "active": true
+  }
+]

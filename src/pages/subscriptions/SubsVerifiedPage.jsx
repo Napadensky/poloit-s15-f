@@ -1,6 +1,6 @@
 const VerifiedPage = () => {
   return (
-    <section className="flex flex-col justify-center items-center">
+    <section className='flex flex-col items-center justify-center'>
       <div>
         <svg
           xmlns='http://www.w3.org/2000/svg'
@@ -18,11 +18,13 @@ const VerifiedPage = () => {
         </svg>
       </div>
       <div>
-        <p>Su correo se verificó correctamente. 
-        En los siguientes días, vas a recibir la información correspondiente para participar del proyecto.</p>
+        <p>
+          Su correo se verificó correctamente. En los siguientes días, vas a
+          recibir la información correspondiente para participar del proyecto.
+        </p>
       </div>
     </section>
   );
 };
 
-export { VerifiedPage }
+export { VerifiedPage };

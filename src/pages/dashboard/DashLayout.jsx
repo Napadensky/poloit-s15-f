@@ -16,7 +16,7 @@ const DashLayout = () => {
           {/* Agrega aquí los elementos del sidebar */}
         </aside>
         <main
-          className={`flex-1 overflow-auto border border-black p-4 lg:p-8 transition-all duration-300 ease-in-out ${isSideBarVisible ? 'w-full' : 'ml-[-16rem] w-full'} `}
+          className={`flex-1 overflow-auto border border-black p-4 transition-all duration-300 ease-in-out lg:p-8 ${isSideBarVisible ? 'w-full' : 'ml-[-16rem] w-full'} `}
         >
           <Outlet />
         </main>

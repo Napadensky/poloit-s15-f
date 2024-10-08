@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { sendEmail } from '../services/emailServices'; 
+import { sendEmail } from '../services/emailServices';
 
 export const useSendEmail = () => {
   const [loading, setLoading] = useState(false);

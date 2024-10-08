@@ -18,7 +18,7 @@ const DashProjectNew = () => {
     active: false,
     tag: [],
     startDate: '',
-    endDate: ''
+    endDate: '',
   };
   const [project, setProject] = useState(InitialProject);
   useEffect(() => {
@@ -39,9 +39,9 @@ const DashProjectNew = () => {
         ? prevProject.tag.filter((t) => t !== value)
         : [...prevProject.tag, value];
       return {
-         ...prevProject,
-         tag: updatedTag,
-      };      
+        ...prevProject,
+        tag: updatedTag,
+      };
     });
   };
 
@@ -50,8 +50,8 @@ const DashProjectNew = () => {
     setProject((prevProject) => ({
       ...prevProject,
       [name]: value,
-}));
-};
+    }));
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setConfirmation(true);
@@ -66,11 +66,9 @@ const DashProjectNew = () => {
 
       Object.keys(project).forEach((key) => {
         if (key !== 'img') {
-          if (key === 'tag'){
-            
-              formData.append('tag', JSON.stringify(project.tag));
-            
-          }else{
+          if (key === 'tag') {
+            formData.append('tag', JSON.stringify(project.tag));
+          } else {
             formData.append(key, project[key]);
           }
         }
@@ -138,7 +136,7 @@ const DashProjectNew = () => {
         <h1 className='text-xl font-bold text-neutral-800 lg:hidden'>
           Crear proyecto
         </h1>
-        <h2 className='mb-4 hidden content-center text-xl font-medium text-[#2F68A1] lg:order-2  lg:block'>
+        <h2 className='mb-4 hidden content-center text-xl font-medium text-[#2F68A1] lg:order-2 lg:block'>
           Sobre el Proyecto
         </h2>
         <div className='lg:order-3 lg:mt-auto'>
@@ -155,8 +153,11 @@ const DashProjectNew = () => {
             placeholder='Ingresar título del proyecto'
           />
         </div>
-        <div className='flex flex-col lg:order-4  lg:justify-center'>
-          <label htmlFor='description' className='my-2 text-sm lg:text-lg font-medium'>
+        <div className='flex flex-col lg:order-4 lg:justify-center'>
+          <label
+            htmlFor='description'
+            className='my-2 text-sm font-medium lg:text-lg'
+          >
             Descripción del Proyecto
           </label>
           <textarea
@@ -187,7 +188,7 @@ const DashProjectNew = () => {
             className='my-4 flex flex-col justify-between gap-2'
             labelClassName='my-4 lg:text-lg text-sm font-medium'
             textLegend='¿Qué Roles requiere el proyecto?'
-            options={tags.map(tag => ({ value: tag._id, text: tag.name }))}
+            options={tags.map((tag) => ({ value: tag._id, text: tag.name }))}
             name='tag'
             selectedValues={project.tag}
             handleSelect={handleSelectTag}
@@ -251,8 +252,8 @@ const DashProjectNew = () => {
           />
         </div>
 
-        <div className='lg:order-1 lg:row-span-2 '>
-          <h2 className='my-2 text-sm lg:hidden font-medium'>
+        <div className='lg:order-1 lg:row-span-2'>
+          <h2 className='my-2 text-sm font-medium lg:hidden'>
             Subir imagen del proyecto
           </h2>
           <div className='h-56 w-full rounded-xl border border-dashed border-gray-300 bg-gray-100'>

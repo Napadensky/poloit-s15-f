@@ -4,27 +4,20 @@ import userIcon from '../assets/Vector.svg';
 
 const SubsNavbar = () => {
   return (
-    <div className='flex justify-between items-center m-1'>
-      <div className='flex-1 flex justify-center xl:justify-start'>
+    <div className='m-1 flex items-center justify-between'>
+      <div className='flex flex-1 justify-center xl:justify-start'>
         <Link to={'/'}>
-          <img 
-            src={logo} 
-            alt='Logo PoloIT'
-            className='hover:brightness-200' 
-          />
+          <img src={logo} alt='Logo PoloIT' className='hover:brightness-200' />
         </Link>
       </div>
-      <div className='flex  justify-center m-1 p-1 border-solid	rounded-full border-black	border-transparent	bg-stone-200	size-9	xl:hidden	'>
+      <div className='m-1 flex size-9 justify-center rounded-full border-solid border-black border-transparent bg-stone-200 p-1 xl:hidden'>
         <Link to={'/login'}>
-          <img  
-            src={userIcon} 
-            alt='Icono usuario'
-          />
+          <img src={userIcon} alt='Icono usuario' />
         </Link>
       </div>
-      <div className='flex justify-center m-1 p-1 '>
+      <div className='m-1 flex justify-center p-1'>
         <Link to={'/login'}>
-          <button className='bg-[#DD5A6B] text-white py-5 m-1 px-10 rounded-xl'>
+          <button className='m-1 rounded-xl bg-[#DD5A6B] px-10 py-5 text-white'>
             Iniciar sesión
           </button>
         </Link>

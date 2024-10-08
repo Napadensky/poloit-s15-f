@@ -22,4 +22,4 @@ const DashRoutes = () => {
   return routes;
 };
 
-export {DashRoutes}
+export { DashRoutes };

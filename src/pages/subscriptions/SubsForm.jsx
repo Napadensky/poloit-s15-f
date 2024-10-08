@@ -2,22 +2,24 @@ import { SubsInputField } from '@/components/SubsInputField';
 import { SubsInputSelect } from '@/components/SubsInputSelect';
 import { useEnroll } from '../../hooks/useEnroll';
 import { useProject } from '../../hooks/useProject';
-import { useSendEmail } from '../../hooks/useEmail'; 
+import { useSendEmail } from '../../hooks/useEmail';
 import { useState } from 'react';
 
-
 export const SubsForm = () => {
-  const { projects, loading: loadingProjects, error: errorProjects, fetchProjects } = useProject(); 
+  const {
+    projects,
+    loading: loadingProjects,
+    error: errorProjects,
+    fetchProjects,
+  } = useProject();
 
-  const {enroll, loading, error, success } = useEnroll();
-  const { triggerEmail } = useSendEmail(); 
+  const { enroll, loading, error, success } = useEnroll();
+  const { triggerEmail } = useSendEmail();
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const enrollmentData = {
       name: e.target.name.value,
       dni: e.target.dni.value,
@@ -26,31 +28,31 @@ export const SubsForm = () => {
       role: e.target.rol.value,
       projects: e.target.proyecto.value,
       ong: e.target.ong.value,
-      link: e.target.link.value
+      link: e.target.link.value,
     };
-  
+
     try {
       const result = await enroll(enrollmentData); // Guarda la inscripción
-      console.log("Resultado de la inscripción:", result);
+      console.log('Resultado de la inscripción:', result);
 
-      console.log(enrollmentData.mail)
-  
+      console.log(enrollmentData.mail);
+
       // Solo envía el correo si la inscripción fue exitosa
       if (result) {
         const emailData = {
           to: enrollmentData.mail,
           subject: 'Inscripción Exitosa',
-          text: `Hola ${enrollmentData.name},\n\nTu inscripción ha sido exitosa. Ya sos parte de PoloIT, te haremos llegar los detalles cuando termine el periodo de inscripcion.`
+          text: `Hola ${enrollmentData.name},\n\nTu inscripción ha sido exitosa. Ya sos parte de PoloIT, te haremos llegar los detalles cuando termine el periodo de inscripcion.`,
         };
         await triggerEmail(emailData); // Envía el correo
         setShowSuccessPopup(true);
         e.target.reset(); // Limpia el formulario
       }
     } catch (err) {
-      console.log("Error al inscribir:", err);
+      console.log('Error al inscribir:', err);
     }
   };
-  
+
   return (
     <div className='mx-auto max-w-md rounded-lg bg-white p-8 shadow-md'>
       <p className='mb-4 text-gray-700'>
@@ -99,30 +101,30 @@ export const SubsForm = () => {
           textLabel={'Rol'}
           id={'rol'}
           options={[
-            {text:'UX-UI' ,value:"UX/UI"},
-            {text:'QA' ,value:"QA"},
-            {text:'Frontend' ,value:"Frontend"},
-            {text:'Backend',value:"Backend"},
+            { text: 'UX-UI', value: 'UX/UI' },
+            { text: 'QA', value: 'QA' },
+            { text: 'Frontend', value: 'Frontend' },
+            { text: 'Backend', value: 'Backend' },
           ]}
         />
-        <SubsInputSelect 
-        placeholder={'Seleccione un proyecto'}
-        textLabel={'Proyecto'}
-        id={'proyecto'}
-        options={projects.map(project => ({
-          text: project.title,
-          value: project._id, // Usar el ID de MongoDB
-        }))}
-       />
+        <SubsInputSelect
+          placeholder={'Seleccione un proyecto'}
+          textLabel={'Proyecto'}
+          id={'proyecto'}
+          options={projects.map((project) => ({
+            text: project.title,
+            value: project._id, // Usar el ID de MongoDB
+          }))}
+        />
 
         <SubsInputSelect
           placeholder={'Seleccione el nombre de su ONG'}
           textLabel={'Ong'}
           id={'ong'}
           options={[
-            {text:'Talento tech' ,value:"Talento tech"},
-            {text:'Silver tech' ,value:"Silver tech"},
-            {text:'Forge' ,value:"Forge"},
+            { text: 'Talento tech', value: 'Talento tech' },
+            { text: 'Silver tech', value: 'Silver tech' },
+            { text: 'Forge', value: 'Forge' },
           ]}
         />
 
@@ -149,22 +151,26 @@ export const SubsForm = () => {
           </button>
         </div>
       </form>
-  
 
-  {showSuccessPopup && (
-      <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
-        <div className="bg-white p-5 rounded shadow-lg">
-          <h2 className="text-lg font-bold text-green-600">Inscripción Exitosa</h2>
-          <p>Tu inscripción ha sido realizada con éxito. Revisa tu correo para más información.</p>
-          <button 
-            className="mt-4 bg-blue-500 text-white px-4 py-2 rounded"
-            onClick={() => setShowSuccessPopup(false)}
-          >
-            Cerrar
-          </button>
+      {showSuccessPopup && (
+        <div className='fixed bottom-0 left-0 right-0 top-0 flex items-center justify-center bg-gray-800 bg-opacity-50'>
+          <div className='rounded bg-white p-5 shadow-lg'>
+            <h2 className='text-lg font-bold text-green-600'>
+              Inscripción Exitosa
+            </h2>
+            <p>
+              Tu inscripción ha sido realizada con éxito. Revisa tu correo para
+              más información.
+            </p>
+            <button
+              className='mt-4 rounded bg-blue-500 px-4 py-2 text-white'
+              onClick={() => setShowSuccessPopup(false)}
+            >
+              Cerrar
+            </button>
+          </div>
         </div>
-      </div>
       )}
-      </div>
+    </div>
   );
 };

@@ -1,5 +1,4 @@
-import { api } from "./api";
-
+import { api } from './api';
 
 export const login = async (mail, password) => {
   if (!mail || !password) {
@@ -10,7 +9,8 @@ export const login = async (mail, password) => {
     const response = await api.post('/login', { mail, password });
     return response.data;
   } catch (error) {
-    const errorMessage = error.response?.data?.message || 'Error en la autenticación';
+    const errorMessage =
+      error.response?.data?.message || 'Error en la autenticación';
     throw new Error(errorMessage);
   }
 };

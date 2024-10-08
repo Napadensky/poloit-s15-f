@@ -1,7 +1,11 @@
 const SearchBar = () => {
   return (
-    <div className="flex items-center justify-evenly my-4">
-      <input className="w-52 h-10 p-2 border border-current	focus:border-current" type='text' placeholder='Buscar en polo it...' />
+    <div className='my-4 flex items-center justify-evenly'>
+      <input
+        className='h-10 w-52 border border-current p-2 focus:border-current'
+        type='text'
+        placeholder='Buscar en polo it...'
+      />
       <button>
         <svg
           xmlns='http://www.w3.org/2000/svg'
