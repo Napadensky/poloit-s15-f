@@ -8,6 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { DashInputCheckbox } from '@/components/DashInputCheckbox';
 import { DashInputField } from '@/components/DashInputField';
 
+
 const DashProjectEdit = () => {
   const { projectId } = useParams();
   const [tags, setTags] = useState([]);
@@ -41,7 +42,7 @@ const DashProjectEdit = () => {
         }
 
         if (projectData.img && !projectData.img.startsWith('http')) {
-          projectData.img = `${import.meta.env.VITE_API_URL}/uploads/${projectData.img}`;
+          projectData.img = `${import.meta.env.VITE_API_URL}${projectData.img}`;
         }
         setProject(projectData);
         setTags(tagsData);
