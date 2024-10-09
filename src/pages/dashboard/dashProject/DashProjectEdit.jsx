@@ -41,7 +41,7 @@ const DashProjectEdit = () => {
         }
 
         if (projectData.img && !projectData.img.startsWith('http')) {
-          projectData.img = `${import.meta.env.VITE_API_URL}/uploads/${projectData.img}`;
+          projectData.img = `${import.meta.env.VITE_API_URL}${projectData.img}`;
         }
         setProject(projectData);
         setTags(tagsData);
@@ -209,7 +209,7 @@ const DashProjectEdit = () => {
           <textarea
             id='description'
             name='description'
-            className='my-2 h-40 w-full resize-none overflow-auto break-words rounded-xl border-0 bg-[#E7F0F8] px-4 py-6 text-sm font-medium'
+            className='my-2 h-40 w-full resize-none overflow-auto focus:outline-none break-words rounded-xl border-0 bg-[#E7F0F8] px-4 py-6 text-sm font-medium'
             placeholder='Objetivos del proyecto y beneficios de la participación'
             value={project.description}
             onChange={handleChange}
