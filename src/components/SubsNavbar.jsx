@@ -10,10 +10,10 @@ export const SubsNavBar = () => {
           <img src={logo} alt='Logo PoloIT' className='hover:brightness-200' />
         </Link>
       </div>
-      
+
       <div className='m-1 flex justify-center p-1'>
         <Link to={'/login'}>
-          <button className='m-1 rounded-xl bg-[#DD5A6B] px-10 py-5 text-white'>
+          <button className='m-1 h-9 w-48 rounded-xl bg-[#DD5A6B] text-white'>
             {token ? 'Panel' : 'Iniciar sesión'}
           </button>
         </Link>
@@ -21,4 +21,3 @@ export const SubsNavBar = () => {
     </div>
   );
 };
-
