@@ -1,78 +1,84 @@
-import project from '../../../assets/project-img.jpg';
-import chevron from '../../../assets/chevron-right.png';
-import user from '../../../assets/user-group.png';
+import { getProjectById } from '@/services/projectServices';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { SquadCard } from '@/components/SquadCard';
 
 const DashProjectDetail = () => {
-  return (
-    <div className='m-4 flex flex-col gap-3 align-middle lg:flex-row lg:justify-around'>
-      <div className='flex flex-col content-center gap-3 lg:w-5/12'>
-        <img
-          src={project}
-          alt='Imagen representativa del proyecto'
-          className='h-52 w-80 rounded-xl object-cover lg:h-auto lg:w-[34rem]'
-        />
+  const [project, setProject] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const { projectId } = useParams();
 
-        <h2 className='text-lg font-semibold text-[#1C3D5F]'>
-          Proyecto App Ecológica
-        </h2>
-        <h3 className='text-sm font-normal text-gray-600'>
-          Duración <b>Septiembre - Diciembre</b> 2024
-        </h3>
-        <h3 className='text-sm font-normal text-gray-600'>
-          Modalidad <b>Virtual</b>
-        </h3>
-        <h3 className='text-sm font-normal text-gray-600'>
-          Cantidad de squads <b>16</b>
-        </h3>
-        <p className='text-sm font-normal text-gray-600'>
-          Una aplicación móvil diseñada para promover hábitos sostenibles.
-          EcoApp ofrece consejos ecológicos diarios, rutas de reciclaje
-          cercanas, y desafíos ambientales para reducir tu huella de carbono.
-          Conecta a los usuarios con iniciativas locales y fomenta un estilo de
-          vida más consciente con el medio ambiente.
-        </p>
-      </div>
-      <div className='flex flex-col gap-3 lg:w-3/12'>
-        <button className='] flex justify-around rounded-xl bg-[#2F68A1] py-5 text-base font-semibold text-neutral-50'>
-          <img src={user} className='stroke-neutral-300' />
-          Squad 1
-          <img src={chevron} />
-        </button>
-        <button className='flex justify-around rounded-xl bg-stone-200 py-5 text-base font-semibold text-neutral-300'>
-          <img src={user} />
-          Squad 2
-          <img src={chevron} />
-        </button>
-        <button className='flex justify-around rounded-xl bg-stone-200 py-5 text-base font-semibold text-neutral-300'>
-          <img src={user} />
-          Squad 3
-          <img src={chevron} />
-        </button>
-        <button className='hidden justify-around rounded-xl bg-stone-200 py-5 text-base font-semibold text-neutral-300 lg:flex'>
-          <img src={user} />
-          Squad 4
-          <img src={chevron} />
-        </button>
-        <button className='hidden justify-around rounded-xl bg-stone-200 py-5 text-base font-semibold text-neutral-300 lg:flex'>
-          <img src={user} />
-          Squad 5
-          <img src={chevron} />
-        </button>
-        <button className='hidden justify-around rounded-xl bg-stone-200 py-5 text-base font-semibold text-neutral-300 lg:flex'>
-          <img src={user} />
-          Squad 6
-          <img src={chevron} />
-        </button>
-        <button className='hidden justify-around rounded-xl bg-stone-200 py-5 text-base font-semibold text-neutral-300 lg:flex'>
-          <img src={user} />
-          Squad 7
-          <img src={chevron} />
-        </button>
-        <button className='hidden justify-around rounded-xl bg-stone-200 py-5 text-base font-semibold text-neutral-300 lg:flex'>
-          <img src={user} />
-          Squad 8
-          <img src={chevron} />
-        </button>
+  useEffect(() => {
+    const fetchProject = async () => {
+      try {
+        const projectData = await getProjectById(projectId);
+
+        if (projectData.img && !projectData.img.startsWith('http')) {
+          projectData.img = `${import.meta.env.VITE_API_URL}${projectData.img}`;
+        }
+        setProject(projectData);
+      } catch (error) {
+        console.error('Error cargando proyecto:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchProject();
+  }, [projectId]);
+  const adjustDate = (dateString) => {
+    const date = new Date(dateString);
+    date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
+    return date.toLocaleDateString();
+  };
+  if (isLoading) {
+    return <div>Cargando...</div>;
+  }
+  if (!project) {
+    return <div>No se pudo cargar el proyecto...</div>;
+  }
+
+  return (
+    <div className='m-4 flex flex-col justify-between gap-3'>
+      <div className='flex w-full flex-col justify-evenly gap-6 p-4 lg:flex-row'>
+        <div
+          key={project._id}
+          className='flex w-full flex-col content-center gap-6 lg:w-1/3'
+        >
+          <div className='lg:mx-auto'>
+            {project.img && (
+              <img
+                className='h-40 w-full rounded-xl object-cover lg:h-64 lg:w-96'
+                src={
+                  project.img.startsWith('http')
+                    ? project.img
+                    : `${import.meta.env.VITE_API_URL}${project.img}`
+                }
+                alt='Imagen del proyecto'
+              />
+            )}
+          </div>
+          <h2 className='text-lg font-semibold text-[#1C3D5F]'>
+            {project.title}
+          </h2>
+          <p className='text-sm font-normal text-gray-600'>
+            Duración: El proyecto inicia el {adjustDate(project.startDate)},
+            entrega el {adjustDate(project.endDate)}
+          </p>
+          <p className='text-sm font-normal text-gray-600'>
+            Modalidad : {project.modalidad}
+          </p>
+          <p className='text-sm font-normal text-gray-600'>
+            Cantidad de squads :
+          </p>
+          <p className='text-sm font-normal text-gray-600'>
+            {project.description}
+          </p>
+        </div>
+        <div className='flex w-full flex-col gap-3 lg:w-1/3'>
+          <SquadCard squadName='Squad 1' />
+          <SquadCard squadName='Squad 2' />
+          <SquadCard squadName='Squad 3' />
+        </div>
       </div>
     </div>
   );
