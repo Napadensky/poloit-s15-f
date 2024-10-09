@@ -20,7 +20,6 @@ const SubsRoutes = () => {
           { path: 'SubsDetail/', element: <SubsDetail /> },
           { path: 'SubsForm/:id', element: <SubsForm /> },
           { path: 'SubsFormMentor/:id', element: <SubsFormMentor /> },
-
           { path: '*', element: <h1>Not Found</h1> },
         ],
       },
@@ -29,4 +28,4 @@ const SubsRoutes = () => {
     return routes;
   };
 
-  export {SubsRoutes}
+export { SubsRoutes };

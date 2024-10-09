@@ -1,8 +1,22 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/polo-it 2.svg';
+import { useEffect } from 'react';
+import { jwtDecode } from 'jwt-decode';
 
-const DashNavbar = (props) => {
+export const DashNavBar = (props) => {
   const { toggleSideBar } = props;
+  const token = localStorage.getItem('token');
+  const navigation = useNavigate();
+
+  useEffect(() => {
+    try {
+      jwtDecode(token);
+    } catch (error) {
+      navigation('/login');
+      console.error(error.message);
+    }
+  }, [token, navigation]);
+
   return (
     <div className='m-1 flex items-center lg:justify-between'>
       <div className='flex flex-1 justify-start xl:justify-start'>
@@ -25,14 +39,20 @@ const DashNavbar = (props) => {
       </div>
 
       <div className='m-1 hidden justify-center p-1 lg:flex'>
-        <Link to={'/login'}>
-          <button className='m-1 h-12 w-48 rounded-xl bg-[#DD5A6B] text-white'>
-            Iniciar sesión
+        <Link to={'/'}>
+          <button className='m-1 h-9 w-48 rounded-xl bg-[#DD5A6B] text-white'>
+            Home
+          </button>
+        </Link>
+        <Link to={'/'}>
+          <button
+            className='m-1 h-9 w-48 rounded-xl bg-[#DD5A6B] text-white'
+            onClick={() => localStorage.removeItem('token')}
+          >
+            Cerrar sesión
           </button>
         </Link>
       </div>
     </div>
   );
 };
-
-export { DashNavbar };

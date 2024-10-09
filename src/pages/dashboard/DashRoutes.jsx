@@ -11,7 +11,7 @@ const DashRoutes = () => {
       element: <DashLayout />,
       children: [
         { path: '', element: <DashHome />, index: true },
-        { path: '/project/:id', element: <DashProjectDetail /> },
+        { path: '/project/:projectId', element: <DashProjectDetail /> },
         { path: '/project/new', element: <DashProjectNew /> },
         { path: '/project/edit/:projectId', element: <DashProjectEdit /> },
         { path: '*', element: <h1>Not Found</h1> },
@@ -22,4 +22,4 @@ const DashRoutes = () => {
   return routes;
 };
 
-export {DashRoutes}
+export { DashRoutes };

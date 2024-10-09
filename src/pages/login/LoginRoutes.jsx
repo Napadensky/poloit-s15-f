@@ -13,4 +13,4 @@ const LoginRoutes = () => {
   return routes;
 };
 
-export {LoginRoutes}
+export { LoginRoutes };

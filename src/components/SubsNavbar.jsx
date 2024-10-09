@@ -1,36 +1,23 @@
 import { Link } from 'react-router-dom';
 import logo from '../assets/polo-it 2.svg';
-import userIcon from '../assets/Vector.svg';
 
-const SubsNavbar = () => {
+export const SubsNavBar = () => {
+  const token = localStorage.getItem('token');
   return (
-    <div className='flex justify-between items-center m-1'>
-      <div className='flex-1 flex justify-center xl:justify-start'>
+    <div className='m-1 flex items-center justify-between'>
+      <div className='flex flex-1 justify-center lg:ml-40'>
         <Link to={'/'}>
-          <img 
-            src={logo} 
-            alt='Logo PoloIT'
-            className='hover:brightness-200' 
-          />
+          <img src={logo} alt='Logo PoloIT' className='hover:brightness-200' />
         </Link>
       </div>
-      <div className='flex  justify-center m-1 p-1 border-solid	rounded-full border-black	border-transparent	bg-stone-200	size-9	xl:hidden	'>
+
+      <div className='m-1 flex justify-center p-1'>
         <Link to={'/login'}>
-          <img  
-            src={userIcon} 
-            alt='Icono usuario'
-          />
-        </Link>
-      </div>
-      <div className='flex justify-center m-1 p-1 '>
-        <Link to={'/login'}>
-          <button className='bg-[#DD5A6B] text-white py-5 m-1 px-10 rounded-xl'>
-            Iniciar sesión
+          <button className='m-1 h-9 w-48 rounded-xl bg-[#DD5A6B] text-white'>
+            {token ? 'Panel' : 'Iniciar sesión'}
           </button>
         </Link>
       </div>
     </div>
   );
 };
-
-export { SubsNavbar };

@@ -109,21 +109,30 @@ const DashProjectEdit = () => {
       console.log('Datos enviados al backend:', sentData);
       const updatedProject = await updateProjectById(projectId, formData);
       console.log('Respuesta del backend:', updatedProject);
-      Object.keys(sentData).forEach(key => {
+      Object.keys(sentData).forEach((key) => {
         if (sentData[key] !== updatedProject[key]) {
-          console.log(`Discrepancia en ${key}:`, 'Enviado:', sentData[key], 'Recibido:', updatedProject[key]);
+          console.log(
+            `Discrepancia en ${key}:`,
+            'Enviado:',
+            sentData[key],
+            'Recibido:',
+            updatedProject[key],
+          );
         }
       });
-      
+
       if (updatedProject.startDate) {
-        updatedProject.startDate = new Date(updatedProject.startDate).toISOString().split('T')[0];
+        updatedProject.startDate = new Date(updatedProject.startDate)
+          .toISOString()
+          .split('T')[0];
       }
       if (updatedProject.endDate) {
-        updatedProject.endDate = new Date(updatedProject.endDate).toISOString().split('T')[0];
+        updatedProject.endDate = new Date(updatedProject.endDate)
+          .toISOString()
+          .split('T')[0];
       }
-  
+
       console.log('Proyecto editado (con fechas ajustadas):', updatedProject);
-     
 
       setProject(updatedProject);
       setModal(true);
@@ -201,7 +210,7 @@ const DashProjectEdit = () => {
           <textarea
             id='description'
             name='description'
-            className='my-2 h-40 w-full resize-none overflow-auto break-words rounded-xl border-0 bg-[#E7F0F8] px-4 py-6 text-sm font-medium'
+            className='my-2 h-40 w-full resize-none overflow-auto focus:outline-none break-words rounded-xl border-0 bg-[#E7F0F8] px-4 py-6 text-sm font-medium'
             placeholder='Objetivos del proyecto y beneficios de la participación'
             value={project.description}
             onChange={handleChange}

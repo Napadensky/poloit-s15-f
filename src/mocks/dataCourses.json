@@ -1,82 +1,82 @@
 [
-    {
-        "_id": "1",
-        "title": "Fundamentos de SQL",
-        "description": "Aprende los fundamentos del lenguaje SQL para gestionar bases de datos relacionales.",
-        "img": "https://link-to-sql-image.jpg",
-        "mentor": "Carlos Sánchez",
-        "maxStudents": 25,
-        "modalidad": "Online",
-        "plataforma": "Google Meet",
-        "precio": 150,
-        "schedules": {
-            "startDate": "2024-09-01",
-            "endDate": "2024-09-30",
-            "days": ["martes", "jueves"],
-            "starHour": "18:00",
-            "endHour": "20:00",
-            "duration": 16
-        },
-        "active": true
+  {
+    "_id": "1",
+    "title": "Fundamentos de SQL",
+    "description": "Aprende los fundamentos del lenguaje SQL para gestionar bases de datos relacionales.",
+    "img": "https://link-to-sql-image.jpg",
+    "mentor": "Carlos Sánchez",
+    "maxStudents": 25,
+    "modalidad": "Online",
+    "plataforma": "Google Meet",
+    "precio": 150,
+    "schedules": {
+      "startDate": "2024-09-01",
+      "endDate": "2024-09-30",
+      "days": ["martes", "jueves"],
+      "starHour": "18:00",
+      "endHour": "20:00",
+      "duration": 16
     },
-    {
-        "_id": "2",
-        "title": "Desarrollo con Next.js",
-        "description": "Curso avanzado para desarrollar aplicaciones web con Next.js.",
-        "img": "https://link-to-nextjs-image.jpg",
-        "mentor": "Laura Martínez",
-        "maxStudents": 20,
-        "modalidad": "Online",
-        "plataforma": "Zoom",
-        "precio": 250,
-        "schedules": {
-            "startDate": "2024-10-01",
-            "endDate": "2024-10-31",
-            "days": ["lunes", "miércoles", "viernes"],
-            "starHour": "19:00",
-            "endHour": "21:00",
-            "duration": 30
-        },
-        "active": true
+    "active": true
+  },
+  {
+    "_id": "2",
+    "title": "Desarrollo con Next.js",
+    "description": "Curso avanzado para desarrollar aplicaciones web con Next.js.",
+    "img": "https://link-to-nextjs-image.jpg",
+    "mentor": "Laura Martínez",
+    "maxStudents": 20,
+    "modalidad": "Online",
+    "plataforma": "Zoom",
+    "precio": 250,
+    "schedules": {
+      "startDate": "2024-10-01",
+      "endDate": "2024-10-31",
+      "days": ["lunes", "miércoles", "viernes"],
+      "starHour": "19:00",
+      "endHour": "21:00",
+      "duration": 30
     },
-    {
-        "_id": "3",
-        "title": "React desde Cero",
-        "description": "Curso introductorio para aprender a desarrollar aplicaciones con React.",
-        "img": "https://link-to-react-image.jpg",
-        "mentor": "Ana Gómez",
-        "maxStudents": 30,
-        "modalidad": "Presencial",
-        "plataforma": "Aula Virtual",
-        "precio": 180,
-        "schedules": {
-            "startDate": "2024-09-15",
-            "endDate": "2024-10-15",
-            "days": ["lunes", "miércoles"],
-            "starHour": "17:00",
-            "endHour": "19:00",
-            "duration": 20
-        },
-        "active": true
+    "active": true
+  },
+  {
+    "_id": "3",
+    "title": "React desde Cero",
+    "description": "Curso introductorio para aprender a desarrollar aplicaciones con React.",
+    "img": "https://link-to-react-image.jpg",
+    "mentor": "Ana Gómez",
+    "maxStudents": 30,
+    "modalidad": "Presencial",
+    "plataforma": "Aula Virtual",
+    "precio": 180,
+    "schedules": {
+      "startDate": "2024-09-15",
+      "endDate": "2024-10-15",
+      "days": ["lunes", "miércoles"],
+      "starHour": "17:00",
+      "endHour": "19:00",
+      "duration": 20
     },
-    {
-        "_id": "4",
-        "title": "Desarrollo Web con Django",
-        "description": "Curso completo para aprender a desarrollar aplicaciones web con Django.",
-        "img": "https://link-to-django-image.jpg",
-        "mentor": "Miguel Torres",
-        "maxStudents": 20,
-        "modalidad": "Online",
-        "plataforma": "Teams",
-        "precio": 220,
-        "schedules": {
-            "startDate": "2024-11-01",
-            "endDate": "2024-12-01",
-            "days": ["martes", "jueves", "sábado"],
-            "starHour": "16:00",
-            "endHour": "18:00",
-            "duration": 24
-        },
-        "active": true
-    }
+    "active": true
+  },
+  {
+    "_id": "4",
+    "title": "Desarrollo Web con Django",
+    "description": "Curso completo para aprender a desarrollar aplicaciones web con Django.",
+    "img": "https://link-to-django-image.jpg",
+    "mentor": "Miguel Torres",
+    "maxStudents": 20,
+    "modalidad": "Online",
+    "plataforma": "Teams",
+    "precio": 220,
+    "schedules": {
+      "startDate": "2024-11-01",
+      "endDate": "2024-12-01",
+      "days": ["martes", "jueves", "sábado"],
+      "starHour": "16:00",
+      "endHour": "18:00",
+      "duration": 24
+    },
+    "active": true
+  }
 ]
