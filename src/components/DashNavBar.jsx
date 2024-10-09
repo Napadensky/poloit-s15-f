@@ -5,18 +5,17 @@ import { jwtDecode } from 'jwt-decode';
 
 export const DashNavBar = (props) => {
   const { toggleSideBar } = props;
-  const token =localStorage.getItem('token');
+  const token = localStorage.getItem('token');
   const navigation = useNavigate();
 
-  useEffect(()=> {
+  useEffect(() => {
     try {
       jwtDecode(token);
-    } catch(error) {
+    } catch (error) {
       navigation('/login');
       console.error(error.message);
     }
-  }, [token,navigation]);
-   
+  }, [token, navigation]);
 
   return (
     <div className='m-1 flex items-center lg:justify-between'>
@@ -40,15 +39,16 @@ export const DashNavBar = (props) => {
       </div>
 
       <div className='m-1 hidden justify-center p-1 lg:flex'>
-      <Link to={'/'}>
+        <Link to={'/'}>
           <button className='m-1 h-9 w-48 rounded-xl bg-[#DD5A6B] text-white'>
             Home
           </button>
-          </Link>
+        </Link>
         <Link to={'/'}>
           <button
-          onClick={() => localStorage.removeItem('token')} 
-          className='m-1 h-12 w-48 rounded-xl bg-[#DD5A6B] text-white'>
+            className='m-1 h-9 w-48 rounded-xl bg-[#DD5A6B] text-white'
+            onClick={() => localStorage.removeItem('token')}
+          >
             Cerrar sesión
           </button>
         </Link>
@@ -56,5 +56,3 @@ export const DashNavBar = (props) => {
     </div>
   );
 };
-
-
