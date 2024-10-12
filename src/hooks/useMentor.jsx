@@ -1,19 +1,20 @@
 import { useState } from 'react';
-import { sendEmail } from '../services/emailServices';
+import { createMentor } from '../services/mentorServices';
 
-export const useSendEmail = () => {
+export const useMentor = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
 
-  const triggerEmail = async (emailData) => {
+  const mentor = async (mentorData) => {
     setLoading(true);
     setError(null);
     setSuccess(false);
 
     try {
-      await sendEmail(emailData);
+      const response = await createMentor(mentorData);
       setSuccess(true);
+      return response;
     } catch (error) {
       setError(error.message);
     } finally {
@@ -21,5 +22,6 @@ export const useSendEmail = () => {
     }
   };
 
-  return { triggerEmail, loading, error, success };
+  return { mentor, loading, error, success };
 };
+

@@ -1,4 +1,4 @@
-import { DashNavbar } from '@/components/DashNavBar';
+import { DashNavBar } from '@/components/DashNavBar';
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
@@ -6,7 +6,7 @@ const DashLayout = () => {
   const [isSideBarVisible, setIsSideBarVisible] = useState(false);
   return (
     <div className='flex h-screen flex-col'>
-      <DashNavbar className='' toggleSideBar={setIsSideBarVisible} />
+      <DashNavBar className='' toggleSideBar={setIsSideBarVisible} />
       <div className='flex flex-1 overflow-hidden'>
         <aside
           className={`w-32 border border-black bg-gray-100 p-4 transition-all duration-300 ease-in-out lg:w-64 ${isSideBarVisible ? 'translate-x-0' : '-translate-x-full'} `}
