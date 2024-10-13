@@ -34,15 +34,15 @@ const DashHome = () => {
     }
   };
   return (
-    <div className='my-4 flex w-full flex-col items-center  gap-4'>
+    <div className='my-4 flex w-full flex-col items-center gap-4'>
       <Link
-        className='flex  bg-blue-500 text-white items-center ml-auto rounded-xl'
+        className='ml-auto flex items-center rounded-xl bg-blue-500 text-white'
         to={`/dashboard/project/new`}
       >
-        <PlusIcon className=' stroke-white size-11 p-3  ' />
+        <PlusIcon className='size-11 stroke-white p-3' />
 
-        <button className='mr-6 text-sm font-medium  lg:text-lg'>
-         Crear nuevo proyecto
+        <button className='mr-6 text-sm font-medium lg:text-lg'>
+          Crear nuevo proyecto
         </button>
       </Link>
       {projects.map((project) => (
