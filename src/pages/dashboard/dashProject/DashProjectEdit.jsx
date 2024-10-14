@@ -1,14 +1,12 @@
 import { useEffect, useState } from 'react';
-import {
-  updateProjectById,
-  getTags,
-  getProjectById,
-} from '@/services/projectServices';
+import { updateProjectById, getTags, getProjectById } from '@/services/projectServices';
 import { useNavigate, useParams } from 'react-router-dom';
 import { DashInputCheckbox } from '@/components/DashInputCheckbox';
 import { DashInputField } from '@/components/DashInputField';
 import { ArrowUpTrayIcon } from '@heroicons/react/24/outline';
-import { CheckCircleIcon } from '@heroicons/react/24/solid';
+import { DashConfirmModal } from '@/components/DashConfirmModal';
+import { DashSuccessModal } from '@/components/DashSuccessModal';
+import { handleChange, handleCloseModal } from '@/utils/projectUtils';
 
 
 const DashProjectEdit = () => {
@@ -20,7 +18,7 @@ const DashProjectEdit = () => {
   const [modal, setModal] = useState(false);
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
-  const navigate = useNavigate();
+  const redirigir = useNavigate();
   const [originalProject, setOriginalProject] = useState(null);
 
   useEffect(() => {
@@ -54,10 +52,8 @@ const DashProjectEdit = () => {
         setIsLoading(false);
       }
     };
-
     fetchProjectAndTags();
   }, [projectId]);
-
   useEffect(() => {
     if (file) {
       const reader = new FileReader();
@@ -80,14 +76,7 @@ const DashProjectEdit = () => {
         : [...prevProject.tag, value],
     }));
   };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setProject((prevProject) => ({
-      ...prevProject,
-      [name]: value,
-    }));
-  };
+  const handleChg = (e) => handleChange(e, setProject);
   const handleSubmit = async (e) => {
     e.preventDefault();
     setConfirmation(true);
@@ -140,10 +129,7 @@ const DashProjectEdit = () => {
       console.error('Error al editar el proyecto:', error);
     }
   };
-  const handleCloseModal = () => {
-    setModal(false);
-    navigate('/dashboard');
-  };
+  const handleCMdl = () => handleCloseModal(setModal, redirigir);
   const handleCancelar = () => {
     setConfirmation(false);
   };
@@ -191,7 +177,7 @@ const DashProjectEdit = () => {
             type='text'
             name='title'
             value={project.title}
-            onChange={handleChange}
+            onChange={handleChg}
             labelClassName=' text-sm lg:text-lg font-medium'
             textLabelMobile='¿Cuál es el título del Proyecto?'
             textLabelDesktop='Título del Proyecto'
@@ -212,7 +198,7 @@ const DashProjectEdit = () => {
             className='my-2 h-full w-full resize-none overflow-auto break-words rounded-xl border-0 bg-[#E7F0F8] p-2 text-sm font-medium focus:outline-none'
             placeholder='Objetivos del proyecto y beneficios de la participación'
             value={project.description}
-            onChange={handleChange}
+            onChange={handleChg}
           />
         </div>
         <div className='lg:order-8'>
@@ -226,7 +212,7 @@ const DashProjectEdit = () => {
             inputClassName='my-2  w-full rounded-xl border-0 bg-[#E7F0F8] p-3'
             placeholder='Ingrese sólo números'
             value={project.maxStudents}
-            onChange={handleChange}
+            onChange={handleChg}
           />
         </div>
         <div className='lg:order-4'>
@@ -250,7 +236,7 @@ const DashProjectEdit = () => {
             textLabelDesktop='Fecha de inicio del Proyecto'
             inputClassName='my-2  w-full rounded-xl border-0 bg-[#E7F0F8] p-3'
             placeholder='yyyy/mm/dd'
-            onChange={handleChange}
+            onChange={handleChg}
             value={project.startDate || ''}
           />
         </div>
@@ -264,7 +250,7 @@ const DashProjectEdit = () => {
             textLabelDesktop='Fecha de finalización del Proyecto'
             inputClassName='my-2  w-full rounded-xl border-0 bg-[#E7F0F8] p-3'
             placeholder='yyyy/mm/dd'
-            onChange={handleChange}
+            onChange={handleChg}
             value={project.endDate || ''}
           />
         </div>
@@ -311,49 +297,19 @@ const DashProjectEdit = () => {
         </div>
       </form>
       {confirmation && (
-        <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
-          <div className='rounded-lg border-2 border-zinc-500 bg-[#F4F5F6] p-8'>
-            <h2 className='mb-4 text-base font-semibold text-[#262A2C]'>
-              Estás a punto de editar un proyecto
-            </h2>
-            <p className='mb-4 text-sm font-normal text-[#4B5358]'>
-              ¿Desea editar el proyecto?
-            </p>
-            <div className='flex justify-end space-x-4'>
-              <button
-                onClick={handleCancelar}
-                className='bg-transparent px-4 py-2 text-sm font-medium text-[#CD1D1D] underline'
-              >
-                Cancelar
-              </button>
-              <button
-                onClick={handleConfirmation}
-                className='bg-transparent px-4 py-2 text-sm font-medium text-[#60B635] underline'
-              >
-                Aceptar
-              </button>
-            </div>
-          </div>
-        </div>
+        <DashConfirmModal
+          onClickCanc={handleCancelar}
+          onClickConf={handleConfirmation}
+          titleText='Estás a punto de editar un proyecto'
+          questionText='¿Desea editar el proyecto?'
+        />
       )}
       {modal && (
-        <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
-          <div className='flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-[#60B635] bg-[#F0F9EB] p-8'>
-            <CheckCircleIcon className='size-6 fill-[#60B635]' />
-            <h2 className='mb-4 text-base font-semibold text-[#262A2C]'>
-              ¡Proyecto editado correctamente!
-            </h2>
-            <p className='mb-4 mr-auto text-sm font-normal text-[#4B5358]'>
-              Ya podés visualizar el proyecto.
-            </p>
-            <button
-              onClick={handleCloseModal}
-              className='ml-auto bg-transparent px-4 py-2 text-[#3A6F20] underline'
-            >
-              Continuar
-            </button>
-          </div>
-        </div>
+        <DashSuccessModal
+          onClickMod={handleCMdl}
+          titleText='¡Proyecto editado correctamente!'
+          descripText='Ya podés visualizar el proyecto.'
+        />
       )}
     </div>
   );
