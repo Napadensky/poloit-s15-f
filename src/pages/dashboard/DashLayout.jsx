@@ -14,7 +14,10 @@ const DashLayout = () => {
           {/* Contenido del sidebar */}
           <h2 className='mb-4 text-xl font-bold'>Sidebar</h2>
           {/* Agrega aquí los elementos del sidebar */}
-          <Link to='mentors'>Mentores</Link>
+          <nav className="flex flex-col space-y-2">
+          <Link to='mentors' className='p-2 hover:bg-gray-200 rounded'>Mentores</Link>
+          <Link to='enrolleds' className='p-2 hover:bg-gray-200 rounded'>Egresados</Link>
+          </nav>
         </aside>
         <main
           className={`flex flex-1 flex-col overflow-auto border border-black p-4 transition-all duration-300 ease-in-out lg:p-8 ${isSideBarVisible ? 'w-full' : ' w-full -ml-64'} `}
