@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/polo-it 2.svg';
 import { useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
+import { Bars3Icon } from '@heroicons/react/24/outline';
 
 export const DashNavBar = (props) => {
   const { toggleSideBar } = props;
@@ -19,20 +20,11 @@ export const DashNavBar = (props) => {
 
   return (
     <div className='m-1 flex items-center lg:justify-between'>
-      <div className='flex flex-1 justify-start xl:justify-start'>
-        <button
+      <div className='flex flex-1 justify-start items-center xl:justify-start'>
+        <Bars3Icon
           onClick={() => toggleSideBar((value) => !value)}
-          className='mr-4'
-        >
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            width='24'
-            height='24'
-            viewBox='0 0 24 24'
-          >
-            <path d='M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z' />
-          </svg>
-        </button>
+          className='size-6 m-4 cursor-pointer'
+        />
         <Link to={'/'}>
           <img src={logo} alt='Logo PoloIT' />
         </Link>

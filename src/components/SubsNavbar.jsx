@@ -7,7 +7,7 @@ export const SubsNavBar = () => {
     <div className='m-1 flex items-center justify-between'>
       <div className='flex flex-1 justify-center lg:ml-40'>
         <Link to={'/'}>
-          <img src={logo} alt='Logo PoloIT' className='hover:brightness-200' />
+          <img src={logo} alt='Logo PoloIT' />
         </Link>
       </div>
 
