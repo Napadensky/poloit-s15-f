@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import { createMentor } from '../services/mentorServices';
 
 export const useMentor = () => {
@@ -21,7 +22,5 @@ export const useMentor = () => {
       setLoading(false);
     }
   };
-
   return { mentor, loading, error, success };
 };
-

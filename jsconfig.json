@@ -5,7 +5,11 @@
     "paths": {
       "@/components/*": ["./components/*"],
       "@/pages/*": ["./pages/*"],
-      "@/styles/*": ["./styles/*"]
+      "@/styles/*": ["./styles/*"],
+      "@/hooks/*":["./hooks/*"],
+      "@/services/*":["./services/*"],
+      "@/routes/*":["./routes/*"],
+
     }
   }
 }
