@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 
 import { useLogin } from '../../hooks/useLogin';
@@ -74,6 +74,14 @@ export const LoginForm = () => {
         </button>
         {error && <p className='text-red-500'>{error}</p>}
       </form>
+      <div className='mt-4 w-full text-center'>
+        <Link
+          to='/forgot-password'
+          className='text-sm text-[#2F68A1] hover:underline'
+        >
+          ¿Olvidaste tu contraseña?
+        </Link>
+      </div>
     </div>
   );
 };
