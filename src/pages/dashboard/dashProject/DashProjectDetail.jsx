@@ -65,9 +65,6 @@ const DashProjectDetail = () => {
             entrega el {adjustDate(project.endDate)}
           </p>
           <p className='text-sm font-normal text-gray-600'>
-            Modalidad : {project.modalidad}
-          </p>
-          <p className='text-sm font-normal text-gray-600'>
             Cantidad de squads :
           </p>
           <p className='text-sm font-normal text-gray-600'>

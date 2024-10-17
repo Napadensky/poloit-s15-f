@@ -1,25 +1,23 @@
 import { DashInputField } from '@/components/DashInputField';
 import { useEffect, useState } from 'react';
-import { createProject, getTags } from '@/services/projectServices';
+import { createProject } from '@/services/projectServices';
 import { useNavigate } from 'react-router-dom';
-import { DashInputCheckbox } from '@/components/DashInputCheckbox';
 import { ArrowUpTrayIcon } from '@heroicons/react/24/outline';
 import { DashConfirmModal } from '@/components/DashConfirmModal';
 import { DashSuccessModal } from '@/components/DashSuccessModal';
 import { handleChange, handleCloseModal } from '@/utils/projectUtils';
+import { DashInputRoles } from '@/components/DashInputRoles';
 
 
 const DashProjectNew = () => {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
-  const [tags, setTags] = useState([]);
   const InitialProject = {
     title: '',
     description: '',
     img: '',
     maxStudents: '',
     active: false,
-    tag: [],
     startDate: '',
     endDate: '',
   };
@@ -38,27 +36,7 @@ const DashProjectNew = () => {
     } else {
       setPreview(null);
     }
-    const fetchTags = async () => {
-      try {
-        const tagsData = await getTags();
-        setTags(tagsData);
-      } catch (error) {
-        console.error('Error obteniendo los tags:', error);
-      }
-    };
-    fetchTags();
   }, [file]);
-  const handleSelectTag = (value) => {
-    setProject((prevProject) => {
-      const updatedTag = prevProject.tag.includes(value)
-        ? prevProject.tag.filter((t) => t !== value)
-        : [...prevProject.tag, value];
-      return {
-        ...prevProject,
-        tag: updatedTag,
-      };
-    });
-  };
   const handleChg = (e) => handleChange(e, setProject);
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -66,12 +44,11 @@ const DashProjectNew = () => {
       'title',
       'description',
       'maxStudents',
-      'tag',
       'startDate',
       'endDate',
     ];
     const camposVacios = camposRequeridos.filter((campo) => !project[campo]);
-    if (camposVacios.length > 0 || !file || project.tag.length === 0) {
+    if (camposVacios.length > 0 || !file) {
       alert('Falta completar campos obligatorios');
       return;
     }
@@ -86,11 +63,8 @@ const DashProjectNew = () => {
 
       Object.keys(project).forEach((key) => {
         if (key !== 'img') {
-          if (key === 'tag') {
-            formData.append('tag', JSON.stringify(project.tag));
-          } else {
-            formData.append(key, project[key]);
-          }
+
+          formData.append(key, project[key]);
         }
       });
       formData.append('img', file, file.name);
@@ -125,7 +99,7 @@ const DashProjectNew = () => {
     setFile(null);
     setPreview(null);
   };
-  
+
   return (
     <div className='m-4 text-neutral-800'>
       <form
@@ -153,7 +127,7 @@ const DashProjectNew = () => {
             placeholder='Ingresar título del proyecto'
           />
         </div>
-        <div className='flex flex-col lg:order-5 lg:row-span-2 lg:justify-center'>
+        <div className='flex flex-col lg:order-5  lg:justify-center'>
           <label
             htmlFor='description'
             className='my-2 text-sm font-medium lg:text-lg'
@@ -169,7 +143,7 @@ const DashProjectNew = () => {
             onChange={handleChg}
           />
         </div>
-        <div className='lg:order-8'>
+        <div className='lg:order-4'>
           <DashInputField
             id='maxStudents'
             type='number'
@@ -183,18 +157,18 @@ const DashProjectNew = () => {
             onChange={handleChg}
           />
         </div>
-        <div className='lg:order-4'>
-          <DashInputCheckbox
-            className='flex flex-col justify-between gap-2 p-3'
-            labelClassName='lg:text-lg text-sm font-medium'
-            textLegend='¿Qué Roles requiere el proyecto?'
-            options={tags.map((tag) => ({ value: tag._id, text: tag.name }))}
-            name='tag'
-            selectedValues={project.tag}
-            handleSelect={handleSelectTag}
-          />
+        <div className='flex flex-col lg:justify-between lg:order-6 lg:row-span-2 '>
+          <p className='lg:text-lg text-sm font-medium'>Número de integrantes por rol:</p>
+          <div className='flex flex-row justify-between gap-3 lg:gap-6'>
+            <DashInputRoles value='uxui' text='UX/UI' />
+            <DashInputRoles value='front' text='Frontend' />
+          </div>
+          <div className='flex flex-row justify-between gap-3 lg:gap-6'>
+            <DashInputRoles value='back' text='Backend' />
+            <DashInputRoles value='testing' text='Testing QA' />
+          </div>
         </div>
-        <div className='lg:order-6'>
+        <div className='lg:order-7'>
           <DashInputField
             id='startDate'
             type='date'
@@ -208,7 +182,7 @@ const DashProjectNew = () => {
             value={project.startDate}
           />
         </div>
-        <div className='lg:order-7'>
+        <div className='lg:order-8'>
           <DashInputField
             id='endDate'
             type='date'
@@ -223,7 +197,7 @@ const DashProjectNew = () => {
           />
         </div>
 
-        <div className='lg:order-1 lg:row-span-3'>
+        <div className='lg:order-1 lg:row-span-3 mb-auto'>
           <h2 className='my-2 text-sm font-medium lg:hidden'>
             Subir imagen del proyecto (*.png, *.jpg, *.jepg)
           </h2>

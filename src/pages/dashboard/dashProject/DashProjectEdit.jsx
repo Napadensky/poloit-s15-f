@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react';
-import { updateProjectById, getTags, getProjectById } from '@/services/projectServices';
+import { updateProjectById, getProjectById } from '@/services/projectServices';
 import { useNavigate, useParams } from 'react-router-dom';
-import { DashInputCheckbox } from '@/components/DashInputCheckbox';
 import { DashInputField } from '@/components/DashInputField';
 import { ArrowUpTrayIcon } from '@heroicons/react/24/outline';
 import { DashConfirmModal } from '@/components/DashConfirmModal';
 import { DashSuccessModal } from '@/components/DashSuccessModal';
 import { handleChange, handleCloseModal } from '@/utils/projectUtils';
+import { DashInputRoles } from '@/components/DashInputRoles';
 
 
 const DashProjectEdit = () => {
   const { projectId } = useParams();
-  const [tags, setTags] = useState([]);
   const [project, setProject] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [confirmation, setConfirmation] = useState(false);
@@ -22,11 +21,10 @@ const DashProjectEdit = () => {
   const [originalProject, setOriginalProject] = useState(null);
 
   useEffect(() => {
-    const fetchProjectAndTags = async () => {
+    const fetchProject = async () => {
       try {
-        const [projectData, tagsData] = await Promise.all([
+        const projectData = await Promise.all([
           getProjectById(projectId),
-          getTags(),
         ]);
         if (projectData.startDate) {
           projectData.startDate = new Date(projectData.startDate)
@@ -44,7 +42,6 @@ const DashProjectEdit = () => {
         }
         setProject(projectData);
         setOriginalProject(projectData);
-        setTags(tagsData);
         setPreview(projectData.img);
       } catch (error) {
         console.error('Error obteniendo los datos:', error);
@@ -52,7 +49,7 @@ const DashProjectEdit = () => {
         setIsLoading(false);
       }
     };
-    fetchProjectAndTags();
+    fetchProject();
   }, [projectId]);
   useEffect(() => {
     if (file) {
@@ -68,14 +65,7 @@ const DashProjectEdit = () => {
     }
   }, [file, project]);
 
-  const handleSelectTag = (value) => {
-    setProject((prevProject) => ({
-      ...prevProject,
-      tag: prevProject.tag.includes(value)
-        ? prevProject.tag.filter((t) => t !== value)
-        : [...prevProject.tag, value],
-    }));
-  };
+  
   const handleChg = (e) => handleChange(e, setProject);
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -86,9 +76,7 @@ const DashProjectEdit = () => {
       const formData = new FormData();
 
       Object.keys(project).forEach((key) => {
-        if (key === 'tag') {
-          formData.append('tag', JSON.stringify(project.tag));
-        } else if (key !== 'img') {
+         if (key !== 'img') {
           formData.append(key, project[key]);
         }
       });
@@ -185,7 +173,7 @@ const DashProjectEdit = () => {
             placeholder='Ingresar título del proyecto'
           />
         </div>
-        <div className='flex flex-col lg:order-5 lg:row-span-2 lg:justify-center'>
+        <div className='flex flex-col lg:order-5  lg:justify-center'>
           <label
             htmlFor='description'
             className='my-2 text-sm font-medium lg:text-lg'
@@ -201,7 +189,7 @@ const DashProjectEdit = () => {
             onChange={handleChg}
           />
         </div>
-        <div className='lg:order-8'>
+        <div className='lg:order-4'>
           <DashInputField
             id='maxStudents'
             type='number'
@@ -215,18 +203,18 @@ const DashProjectEdit = () => {
             onChange={handleChg}
           />
         </div>
-        <div className='lg:order-4'>
-          <DashInputCheckbox
-            className='flex flex-col justify-between gap-2 p-3'
-            labelClassName='lg:text-lg text-sm font-medium'
-            textLegend='¿Qué Roles requiere el proyecto?'
-            options={tags.map((tag) => ({ value: tag._id, text: tag.name }))}
-            name='tag'
-            selectedValues={project.tag}
-            handleSelect={handleSelectTag}
-          />
+        <div className='flex flex-col lg:justify-between lg:order-6 lg:row-span-2 '>
+          <p className='lg:text-lg text-sm font-medium'>Número de integrantes por rol:</p>
+          <div className='flex flex-row justify-between gap-3 lg:gap-6'>
+            <DashInputRoles value='uxui' text='UX/UI' />
+            <DashInputRoles value='front' text='Frontend' />
+          </div>
+          <div className='flex flex-row justify-between gap-3 lg:gap-6'>
+            <DashInputRoles value='back' text='Backend' />
+            <DashInputRoles value='testing' text='Testing QA' />
+          </div>
         </div>
-        <div className='lg:order-6'>
+        <div className='lg:order-7'>
           <DashInputField
             id='startDate'
             type='date'
@@ -240,7 +228,7 @@ const DashProjectEdit = () => {
             value={project.startDate || ''}
           />
         </div>
-        <div className='lg:order-7'>
+        <div className='lg:order-8'>
           <DashInputField
             id='endDate'
             type='date'
@@ -255,7 +243,7 @@ const DashProjectEdit = () => {
           />
         </div>
 
-        <div className='lg:order-1 lg:row-span-3'>
+        <div className='lg:order-1 lg:row-span-3 mb-auto'>
           <h2 className='my-2 text-sm font-medium lg:hidden'>
             Imagen del proyecto (*.png, *.jpg, *.jepg)
           </h2>
