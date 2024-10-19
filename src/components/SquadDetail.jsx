@@ -18,5 +18,6 @@ export const SquadDetail = () => {
         </h3>
       </div>
     </div>
+  );
 
 };
