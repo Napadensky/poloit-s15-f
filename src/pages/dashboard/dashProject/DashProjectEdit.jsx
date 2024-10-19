@@ -70,14 +70,17 @@ const DashProjectEdit = () => {
   const handleConfirmation = async () => {
     try {
       const formData = new FormData();
-      Object.keys(project).forEach((key) => {
-        if (key !== 'img') {
-          formData.append(key, project[key]);
-        }
-      });
+      formData.append('title', project.title); // Asegúrate de que esto solo se haga una vez
+      formData.append('description', project.description);
+      formData.append('maxStudents', project.maxStudents);
+      formData.append('startDate', project.startDate);
+      formData.append('endDate', project.endDate);
+
       if (file) {
         formData.append('img', file);
       }
+      console.log('Form Data:', Array.from(formData.entries())); // Muestra el contenido de formData
+
       const updatedProject = await updateProjectById(projectId, formData);
       if (updatedProject.startDate) {
         updatedProject.startDate = new Date(updatedProject.startDate)
@@ -102,6 +105,7 @@ const DashProjectEdit = () => {
   };
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
+    console.log('archivo seleccionado:', selectedFile)
     if (selectedFile) {
       setFile(selectedFile);
       setPreview(URL.createObjectURL(selectedFile));
