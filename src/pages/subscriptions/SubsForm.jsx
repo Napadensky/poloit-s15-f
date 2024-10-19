@@ -1,3 +1,4 @@
+import {useNavigate}from 'react-router-dom';
 import { SubsInputField } from '@/components/SubsInputField';
 import { SubsInputSelect } from '@/components/SubsInputSelect';
 import { useEnroll } from '../../hooks/useEnroll';
@@ -6,6 +7,7 @@ import { useSendEmail } from '../../hooks/useEmail';
 import { useState } from 'react';
 
 export const SubsForm = () => {
+  const navigate = useNavigate();
   const {
     projects,
     loading: loadingProjects,
@@ -17,8 +19,14 @@ export const SubsForm = () => {
   const { triggerEmail } = useSendEmail();
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
+  const handleCancel = () =>{
+    navigate(-1);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    
 
     const enrollmentData = {
       name: e.target.name.value,
@@ -139,6 +147,7 @@ export const SubsForm = () => {
           <button
             type='button'
             className='focus:shadow-outline text-blue hover:bg-[#71AJD6]focus:outline-none w-full rounded-xl border border-blue-500 px-4 py-2 focus:bg-[#F4F5F6]'
+            onClick={handleCancel}
           >
             Cancelar
           </button>
