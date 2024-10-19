@@ -6,8 +6,7 @@ import { ArrowUpTrayIcon } from '@heroicons/react/24/outline';
 import { DashConfirmModal } from '@/components/DashConfirmModal';
 import { DashSuccessModal } from '@/components/DashSuccessModal';
 import { handleChange, handleCloseModal } from '@/utils/projectUtils';
-import { DashInputRoles } from '@/components/DashInputRoles';
-
+//import { DashInputRoles } from '@/components/DashInputRoles';
 
 const DashProjectEdit = () => {
   const { projectId } = useParams();
@@ -18,14 +17,11 @@ const DashProjectEdit = () => {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const redirigir = useNavigate();
-  const [originalProject, setOriginalProject] = useState(null);
 
   useEffect(() => {
     const fetchProject = async () => {
       try {
-        const projectData = await Promise.all([
-          getProjectById(projectId),
-        ]);
+        const projectData = await getProjectById(projectId);
         if (projectData.startDate) {
           projectData.startDate = new Date(projectData.startDate)
             .toISOString()
@@ -36,12 +32,10 @@ const DashProjectEdit = () => {
             .toISOString()
             .split('T')[0];
         }
-
         if (projectData.img && !projectData.img.startsWith('http')) {
           projectData.img = `${import.meta.env.VITE_API_URL}${projectData.img}`;
         }
         setProject(projectData);
-        setOriginalProject(projectData);
         setPreview(projectData.img);
       } catch (error) {
         console.error('Error obteniendo los datos:', error);
@@ -65,7 +59,9 @@ const DashProjectEdit = () => {
     }
   }, [file, project]);
 
-  
+  const handleCancel = () => {
+    redirigir('/dashboard');
+  };
   const handleChg = (e) => handleChange(e, setProject);
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -74,31 +70,15 @@ const DashProjectEdit = () => {
   const handleConfirmation = async () => {
     try {
       const formData = new FormData();
-
       Object.keys(project).forEach((key) => {
-         if (key !== 'img') {
+        if (key !== 'img') {
           formData.append(key, project[key]);
         }
       });
       if (file) {
         formData.append('img', file);
       }
-      const sentData = Object.fromEntries(formData);
-      console.log('Datos enviados al backend:', sentData);
       const updatedProject = await updateProjectById(projectId, formData);
-      console.log('Respuesta del backend:', updatedProject);
-      Object.keys(sentData).forEach((key) => {
-        if (sentData[key] !== updatedProject[key]) {
-          console.log(
-            `Discrepancia en ${key}:`,
-            'Enviado:',
-            sentData[key],
-            'Recibido:',
-            updatedProject[key],
-          );
-        }
-      });
-
       if (updatedProject.startDate) {
         updatedProject.startDate = new Date(updatedProject.startDate)
           .toISOString()
@@ -109,7 +89,6 @@ const DashProjectEdit = () => {
           .toISOString()
           .split('T')[0];
       }
-
       setProject(updatedProject);
       setModal(true);
       setConfirmation(false);
@@ -131,11 +110,6 @@ const DashProjectEdit = () => {
         img: selectedFile,
       }));
     }
-  };
-  const handleReset = () => {
-    setProject(originalProject);
-    setFile(null);
-    setPreview(originalProject.img);
   };
 
   if (isLoading) {
@@ -173,10 +147,10 @@ const DashProjectEdit = () => {
             placeholder='Ingresar título del proyecto'
           />
         </div>
-        <div className='flex flex-col lg:order-5  lg:justify-center'>
+        <div className='flex flex-col lg:order-6  lg:justify-center'>
           <label
             htmlFor='description'
-            className='my-2 text-sm font-medium lg:text-lg'
+            className='text-sm font-medium lg:text-lg'
           >
             Descripción del Proyecto
           </label>
@@ -203,7 +177,7 @@ const DashProjectEdit = () => {
             onChange={handleChg}
           />
         </div>
-        <div className='flex flex-col lg:justify-between lg:order-6 lg:row-span-2 '>
+        {/* <div className='flex flex-col lg:justify-between lg:order-6 lg:row-span-2 '>
           <p className='lg:text-lg text-sm font-medium'>Número de integrantes por rol:</p>
           <div className='flex flex-row justify-between gap-3 lg:gap-6'>
             <DashInputRoles value='uxui' text='UX/UI' />
@@ -213,8 +187,8 @@ const DashProjectEdit = () => {
             <DashInputRoles value='back' text='Backend' />
             <DashInputRoles value='testing' text='Testing QA' />
           </div>
-        </div>
-        <div className='lg:order-7'>
+        </div> */}
+        <div className='lg:order-5'>
           <DashInputField
             id='startDate'
             type='date'
@@ -228,7 +202,7 @@ const DashProjectEdit = () => {
             value={project.startDate || ''}
           />
         </div>
-        <div className='lg:order-8'>
+        <div className='lg:order-7'>
           <DashInputField
             id='endDate'
             type='date'
@@ -248,7 +222,7 @@ const DashProjectEdit = () => {
             Imagen del proyecto (*.png, *.jpg, *.jepg)
           </h2>
           <div className='h-64 rounded-xl border border-dashed border-gray-300 bg-gray-100'>
-            <label htmlFor='img' className='flex h-full w-full justify-center'>
+            <label htmlFor='img' className='flex h-full w-full justify-center items-center'>
               {preview ? (
                 <img
                   src={preview}
@@ -269,10 +243,10 @@ const DashProjectEdit = () => {
             />
           </div>
         </div>
-        <div className='flex w-full flex-row justify-between lg:order-9 lg:ml-auto lg:mt-auto lg:h-fit lg:w-[28rem]'>
+        <div className='flex w-full flex-row justify-between lg:order-8 lg:ml-auto lg:mt-auto lg:h-fit lg:w-[28rem]'>
           <button
             type='button'
-            onClick={handleReset}
+            onClick={handleCancel}
             className='w-40 cursor-pointer rounded-xl border-2 border-[#DD5A6B] bg-zinc-50 px-4 py-3 text-base font-semibold text-[#DD5A6B] lg:w-52 lg:border-[#2F68A1] lg:px-6 lg:text-[#2F68A1]'
           >
             Cancelar

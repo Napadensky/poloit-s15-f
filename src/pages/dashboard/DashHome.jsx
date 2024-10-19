@@ -2,15 +2,12 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getProjects, deleteProject } from '@/services/projectServices';
 import { SubsInputCard } from '@/components/SubsInputCard';
-import {
-  MagnifyingGlassIcon,
-  PencilSquareIcon,
-  PlusIcon,
-  TrashIcon,
-} from '@heroicons/react/24/outline';
+import { MagnifyingGlassIcon, PencilSquareIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { DashConfirmModal } from '@/components/DashConfirmModal';
 
 const DashHome = () => {
-  console.log(import.meta.env);
+  const [modalConfirm, setModalConfirm] = useState(false);
+  const [projectToDelete, setProjectToDelete] = useState(null);
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
@@ -33,6 +30,13 @@ const DashHome = () => {
       console.error('Error al borrar el proyecto:', error);
     }
   };
+  const confirmDelete = () => {
+    if (projectToDelete) {
+      handleDelete(projectToDelete);
+      setProjectToDelete(null);
+      setModalConfirm(false);
+    }
+  }
   return (
     <div className='my-4 flex w-full flex-col items-center gap-4'>
       <Link
@@ -79,7 +83,10 @@ const DashHome = () => {
               <TrashIcon className='size-4 stroke-[#dc2626] lg:size-6' />
               <button
                 className='bg-none text-sm font-medium text-red-600 underline lg:text-lg'
-                onClick={() => handleDelete(project._id)}
+                onClick={() => {
+                  setProjectToDelete(project._id);
+                  setModalConfirm(true);
+                }}
               >
                 Borrar
               </button>
@@ -87,6 +94,14 @@ const DashHome = () => {
           </div>
         </div>
       ))}
+      {modalConfirm && (
+        <DashConfirmModal
+          onClickCanc={() => setModalConfirm(false)}
+          onClickConf={confirmDelete}
+          titleText='Confirmar eliminación'
+          questionText='¿Estás seguro de que deseas eliminar este proyecto?'
+        />
+      )}
     </div>
   );
 };

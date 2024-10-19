@@ -11,17 +11,11 @@ export const getProjects = async () => {
 
 export const createProject = async (formData) => {
   try {
-    console.log('Enviando datos del proyecto:', formData);
-    console.log('tags enviados', formData.get('tags'));
-    for (let [key, value] of formData.entries()) {
-      console.log(key, value instanceof File ? value.name : value);
-    }
     const response = await api.post('/projects', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     });
-    console.log('Respuesta del servidor:', response);
     return response.data;
   } catch (error) {
     console.error('Error detallado:', error.response || error);
@@ -51,13 +45,11 @@ export const getProjectById = async (projectId) => {
 
 export const updateProjectById = async (projectId, formData) => {
   try {
-    console.log('Datos enviados al backend:', Object.fromEntries(formData));
-    const response = await api.put(`/projects/${projectId}`, formData, {
+   const response = await api.put(`/projects/${projectId}`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     });
-    console.log('Respuesta del backend:', response.data);
     return response.data;
   } catch (error) {
     console.error('Error detallado:', error.response || error);
