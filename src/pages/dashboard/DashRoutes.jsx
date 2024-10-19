@@ -6,6 +6,7 @@ import { DashProjectNew } from './dashProject/DashProjectNew';
 import { DashProjectEdit } from './dashProject/DashProjectEdit';
 import { DashMentors } from '../dashMentors/DashMentors';
 import {DashEnrolleds} from '../dashEnrolleds/DashEnrolleds';
+import { SquadDetail } from '@/components/SquadDetail';
 
 const DashRoutes = () => {
   const routes = useRoutes([
@@ -18,6 +19,7 @@ const DashRoutes = () => {
         { path: '/project/edit/:projectId', element: <DashProjectEdit /> },
         { path: '/mentors', element : <DashMentors /> },
         { path: '/enrolleds', element : <DashEnrolleds /> },
+        { path: '/squadDetail', element : <SquadDetail /> },
         { path: '*', element: <h1>Not Found</h1> },
       ],
     },

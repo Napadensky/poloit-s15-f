@@ -4,7 +4,7 @@ import { SubsHome } from './SubsHome';
 import { SubsDetail } from './SubsDetail';
 import { SubsForm } from './SubsForm';
 import { SubsFormMentor } from './SubsFormMentor';
-import { SquadDetail } from '@/components/SquadDetail';
+
 
 const SubsRoutes = () => {
     const routes = useRoutes([
@@ -20,7 +20,7 @@ const SubsRoutes = () => {
           { path: 'SubsDetail/:id', element: <SubsDetail /> },
           { path: 'SubsForm/:id', element: <SubsForm /> },
           { path: 'SubsFormMentor/:id', element: <SubsFormMentor /> },
-          { path: 'SquadDetail/:id', element: <SquadDetail />},
+         
           { path: '*', element: <h1>Not Found</h1> },
         ],
       },

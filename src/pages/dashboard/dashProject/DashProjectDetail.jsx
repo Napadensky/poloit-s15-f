@@ -1,6 +1,6 @@
 import { getProjectById } from '@/services/projectServices';
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { SquadCard } from '@/components/SquadCard';
 
 const DashProjectDetail = () => {
@@ -72,9 +72,9 @@ const DashProjectDetail = () => {
           </p>
         </div>
         <div className='flex w-full flex-col gap-3 lg:w-1/3'>
-          <SquadCard squadName='Squad 1' />
-          <SquadCard squadName='Squad 2' />
-          <SquadCard squadName='Squad 3' />
+          <Link to={`/DashBoard/SquadDetail/`}>
+            <SquadCard squadName='Squads' />
+          </Link>
         </div>
       </div>
     </div>
