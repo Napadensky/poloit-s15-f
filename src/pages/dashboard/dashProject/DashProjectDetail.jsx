@@ -77,8 +77,7 @@ const DashProjectDetail = () => {
   const handleMailMent = async (e) => {
     e.preventDefault();
     const mailData = {
-      to: [...mentorMail, 'georgi_saku@hotmail.com'],
-      // to: mentorMail,
+      to: mentorMail,
       subject: mailSubjectM,
       text: mailTextM,
     };
@@ -89,8 +88,7 @@ const DashProjectDetail = () => {
   const handleMailSubs = async (e) => {
     e.preventDefault();
     const mailData = {
-      to: [...enrolledMail, 'georgi_saku@hotmail.com'],
-      //to: enrolledMail,
+      to: enrolledMail,
       subject: mailSubjectS,
       text: mailTextS,
     };
@@ -101,7 +99,7 @@ const DashProjectDetail = () => {
   const handleMailAll = async (e) => {
     e.preventDefault();
     const mailData = {
-      to: [...mentorMail, ...enrolledMail, 'georgi_saku@hotmail.com'],
+      to: [...mentorMail, ...enrolledMail,],
       subject: mailSubject,
       text: mailText,
     };
