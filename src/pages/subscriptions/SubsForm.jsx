@@ -1,4 +1,4 @@
-import {useNavigate}from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { SubsInputField } from '@/components/SubsInputField';
 import { SubsInputSelect } from '@/components/SubsInputSelect';
 import { useEnroll } from '../../hooks/useEnroll';
@@ -19,14 +19,12 @@ export const SubsForm = () => {
   const { triggerEmail } = useSendEmail();
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
-  const handleCancel = () =>{
+  const handleCancel = () => {
     navigate(-1);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    
 
     const enrollmentData = {
       name: e.target.name.value,

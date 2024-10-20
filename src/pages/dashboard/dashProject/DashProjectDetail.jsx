@@ -1,10 +1,12 @@
 import { getProjectById } from '@/services/projectServices';
 import { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { SquadCard } from '@/components/SquadCard';
+import { getSquad } from '@/services/squadService';
 
 const DashProjectDetail = () => {
   const [project, setProject] = useState(null);
+  const [squads, setSquads] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { projectId } = useParams();
 
@@ -23,20 +25,32 @@ const DashProjectDetail = () => {
         setIsLoading(false);
       }
     };
+    const fetchSquads = async () => {
+      try {
+        const squadsData = await getSquad();
+        setSquads(squadsData);
+      } catch (error) {
+        console.error('Error cargando squads:', error);
+      }
+    };
     fetchProject();
+    fetchSquads();
   }, [projectId]);
   const adjustDate = (dateString) => {
     const date = new Date(dateString);
     date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
     return date.toLocaleDateString();
   };
+
   if (isLoading) {
     return <div>Cargando...</div>;
   }
   if (!project) {
     return <div>No se pudo cargar el proyecto...</div>;
   }
-
+  const relatedSquads = squads.filter(
+    (squad) => squad.project.toString() === projectId,
+  );
   return (
     <div className='m-4 flex flex-col justify-between gap-3'>
       <div className='flex w-full flex-col justify-evenly gap-6 p-4 lg:flex-row'>
@@ -65,16 +79,13 @@ const DashProjectDetail = () => {
             entrega el {adjustDate(project.endDate)}
           </p>
           <p className='text-sm font-normal text-gray-600'>
-            Cantidad de squads :
-          </p>
-          <p className='text-sm font-normal text-gray-600'>
             {project.description}
           </p>
         </div>
         <div className='flex w-full flex-col gap-3 lg:w-1/3'>
-          <Link to={`/DashBoard/SquadDetail/`}>
-            <SquadCard squadName='Squads' />
-          </Link>
+          {relatedSquads.map((squad) => (
+            <SquadCard key={squad._id} squad={squad} />
+          ))}
         </div>
       </div>
     </div>

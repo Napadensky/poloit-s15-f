@@ -33,12 +33,12 @@ export const SubsInputCard = (props) => {
           />
         )}
       </div>
-      <div className='flex flex-col items-center gap-2 p-2 lg:flex w-full lg:w-2/3 justify-center lg:gap-8'>
+      <div className='flex w-full flex-col items-center justify-center gap-2 p-2 lg:flex lg:w-2/3 lg:gap-8'>
         <h2 className='text-xl font-bold text-[#262A2C]'>{title}</h2>
         <p className='text-base font-normal text-[#262A2C] lg:w-96'>
           {description}
         </p>
-        <div className='flex lg:w-72 flex-row gap-2 rounded-xl border border-transparent bg-[#F4F5F6] p-2'>
+        <div className='flex flex-row gap-2 rounded-xl border border-transparent bg-[#F4F5F6] p-2 lg:w-72'>
           <CalendarDaysIcon className='size-8 text-[#262A2C]' />
           <p className='text-sm font-bold text-[#262A2C]'>
             El proyecto inicia el {adjustDate(startDate)}, entrega el{' '}

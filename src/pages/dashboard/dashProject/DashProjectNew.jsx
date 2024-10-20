@@ -62,7 +62,6 @@ const DashProjectNew = () => {
 
       Object.keys(project).forEach((key) => {
         if (key !== 'img') {
-
           formData.append(key, project[key]);
         }
       });
@@ -123,7 +122,7 @@ const DashProjectNew = () => {
             placeholder='Ingresar título del proyecto'
           />
         </div>
-        <div className='flex flex-col lg:order-6  lg:justify-center'>
+        <div className='flex flex-col lg:order-6 lg:justify-center'>
           <label
             htmlFor='description'
             className='text-sm font-medium lg:text-lg'
@@ -193,12 +192,15 @@ const DashProjectNew = () => {
           />
         </div>
 
-        <div className='lg:order-1 lg:row-span-3 mb-auto'>
+        <div className='mb-auto lg:order-1 lg:row-span-3'>
           <h2 className='my-2 text-sm font-medium lg:hidden'>
             Subir imagen del proyecto (*.png, *.jpg, *.jepg)
           </h2>
           <div className='h-64 rounded-xl border border-dashed border-gray-300 bg-gray-100'>
-            <label htmlFor='img' className='flex h-full w-full justify-center items-center'>
+            <label
+              htmlFor='img'
+              className='flex h-full w-full items-center justify-center'
+            >
               {preview ? (
                 <img
                   src={preview}

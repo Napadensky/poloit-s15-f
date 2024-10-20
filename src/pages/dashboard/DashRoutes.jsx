@@ -5,7 +5,7 @@ import { DashProjectDetail } from './dashProject/DashProjectDetail';
 import { DashProjectNew } from './dashProject/DashProjectNew';
 import { DashProjectEdit } from './dashProject/DashProjectEdit';
 import { DashMentors } from '../dashMentors/DashMentors';
-import {DashEnrolleds} from '../dashEnrolleds/DashEnrolleds';
+import { DashEnrolleds } from '../dashEnrolleds/DashEnrolleds';
 import { SquadDetail } from '@/components/SquadDetail';
 
 const DashRoutes = () => {
@@ -17,9 +17,9 @@ const DashRoutes = () => {
         { path: '/project/:projectId', element: <DashProjectDetail /> },
         { path: '/project/new', element: <DashProjectNew /> },
         { path: '/project/edit/:projectId', element: <DashProjectEdit /> },
-        { path: '/mentors', element : <DashMentors /> },
-        { path: '/enrolleds', element : <DashEnrolleds /> },
-        { path: '/squadDetail', element : <SquadDetail /> },
+        { path: '/mentors', element: <DashMentors /> },
+        { path: '/enrolleds', element: <DashEnrolleds /> },
+        { path: '/squadDetail/:squadId', element: <SquadDetail /> },
         { path: '*', element: <h1>Not Found</h1> },
       ],
     },

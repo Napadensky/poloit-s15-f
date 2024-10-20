@@ -20,10 +20,10 @@ export const DashNavBar = (props) => {
 
   return (
     <div className='m-1 flex items-center lg:justify-between'>
-      <div className='flex flex-1 justify-start items-center xl:justify-start'>
+      <div className='flex flex-1 items-center justify-start xl:justify-start'>
         <Bars3Icon
           onClick={() => toggleSideBar((value) => !value)}
-          className='size-6 m-4 cursor-pointer'
+          className='m-4 size-6 cursor-pointer'
         />
         <Link to={'/'}>
           <img src={logo} alt='Logo PoloIT' />
