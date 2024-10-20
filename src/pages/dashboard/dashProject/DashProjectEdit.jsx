@@ -6,7 +6,6 @@ import { ArrowUpTrayIcon } from '@heroicons/react/24/outline';
 import { DashConfirmModal } from '@/components/DashConfirmModal';
 import { DashSuccessModal } from '@/components/DashSuccessModal';
 import { handleChange, handleCloseModal } from '@/utils/projectUtils';
-//import { DashInputRoles } from '@/components/DashInputRoles';
 
 const DashProjectEdit = () => {
   const { projectId } = useParams();
@@ -70,7 +69,7 @@ const DashProjectEdit = () => {
   const handleConfirmation = async () => {
     try {
       const formData = new FormData();
-      formData.append('title', project.title); // Asegúrate de que esto solo se haga una vez
+      formData.append('title', project.title); 
       formData.append('description', project.description);
       formData.append('maxStudents', project.maxStudents);
       formData.append('startDate', project.startDate);
@@ -79,8 +78,7 @@ const DashProjectEdit = () => {
       if (file) {
         formData.append('img', file);
       }
-      console.log('Form Data:', Array.from(formData.entries())); // Muestra el contenido de formData
-
+      console.log('Form Data:', Array.from(formData.entries())); 
       const updatedProject = await updateProjectById(projectId, formData);
       if (updatedProject.startDate) {
         updatedProject.startDate = new Date(updatedProject.startDate)
@@ -181,17 +179,6 @@ const DashProjectEdit = () => {
             onChange={handleChg}
           />
         </div>
-        {/* <div className='flex flex-col lg:justify-between lg:order-6 lg:row-span-2 '>
-          <p className='lg:text-lg text-sm font-medium'>Número de integrantes por rol:</p>
-          <div className='flex flex-row justify-between gap-3 lg:gap-6'>
-            <DashInputRoles value='uxui' text='UX/UI' />
-            <DashInputRoles value='front' text='Frontend' />
-          </div>
-          <div className='flex flex-row justify-between gap-3 lg:gap-6'>
-            <DashInputRoles value='back' text='Backend' />
-            <DashInputRoles value='testing' text='Testing QA' />
-          </div>
-        </div> */}
         <div className='lg:order-5'>
           <DashInputField
             id='startDate'

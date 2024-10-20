@@ -19,6 +19,7 @@ const DashProjectDetail = () => {
   const [mailSubjectS, setMailSubjectS] = useState('');
   const [mailTextS, setMailTextS] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const { projectId } = useParams();
 
   useEffect(() => {
@@ -82,6 +83,7 @@ const DashProjectDetail = () => {
       text: mailTextM,
     };
     await triggerEmail(mailData);
+    setShowSuccessPopup(true);
     e.target.reset();
   };
   const handleMailSubs = async (e) => {
@@ -93,6 +95,7 @@ const DashProjectDetail = () => {
       text: mailTextS,
     };
     await triggerEmail(mailData);
+    setShowSuccessPopup(true);
     e.target.reset();
   };
   const handleMailAll = async (e) => {
@@ -103,6 +106,7 @@ const DashProjectDetail = () => {
       text: mailText,
     };
     await triggerEmail(mailData);
+    setShowSuccessPopup(true);
     e.target.reset();
   };
   if (isLoading) {
@@ -154,22 +158,22 @@ const DashProjectDetail = () => {
       </div>
       <div className='flex flex-col lg:flex-row lg:justify-between lg:gap-4'>
         <div className='flex flex-col p-4 gap-2'>
-          <h3>Enviar mail a los mentores</h3>
+          <h3 className='text-lg text-blue-600 font-bold'>Enviar mail a los mentores</h3>
           <form onSubmit={handleMailMent} className='flex flex-col gap-2'>
 
-            <label htmlFor="mailSubjet">Asunto:</label>
+            <label htmlFor="mailSubjetM">Asunto:</label>
             <input
               type="text"
-              id='mailSubjet'
+              id='mailSubjetM'
               className='m-2 rounded-xl border-0 bg-[#E7F0F8] p-2'
               value={mailSubjectM}
               onChange={(e) => setMailSubjectM(e.target.value)}
             />
 
-            <label htmlFor="bodyMail">Cuerpo del mail:</label>
+            <label htmlFor="bodyMailM">Cuerpo del mail:</label>
             <textarea
-              name="bodyMail"
-              id="bodyMail"
+              name="bodyMailM"
+              id="bodyMailM"
               className='m-2 rounded-xl border-0 bg-[#E7F0F8] p-2'
               value={mailTextM}
               onChange={(e) => setMailTextM(e.target.value)}
@@ -180,20 +184,20 @@ const DashProjectDetail = () => {
           </form>
         </div>
         <div className='flex flex-col p-4 gap-2'>
-          <h3>Enviar mail a los inscriptos</h3>
+          <h3 className='text-lg text-blue-600 font-bold'>Enviar mail a los inscriptos</h3>
           <form onSubmit={handleMailSubs} className='flex flex-col gap-2'>
-            <label htmlFor="mailSubjet">Asunto:</label>
+            <label htmlFor="mailSubjetS">Asunto:</label>
             <input
               type="text"
-              id='mailSubjet'
+              id='mailSubjetS'
               className='m-2 rounded-xl border-0 bg-[#E7F0F8] p-2'
               value={mailSubjectS}
               onChange={(e) => setMailSubjectS(e.target.value)}
             />
-            <label htmlFor="bodyMail">Cuerpo del mail:</label>
+            <label htmlFor="bodyMailS">Cuerpo del mail:</label>
             <textarea
-              name="bodyMail"
-              id="bodyMail"
+              name="bodyMailS"
+              id="bodyMailS"
               className='m-2 rounded-xl border-0 bg-[#E7F0F8] p-2'
               value={mailTextS}
               onChange={(e) => setMailTextS(e.target.value)}
@@ -202,7 +206,7 @@ const DashProjectDetail = () => {
           </form>
         </div>
         <div className='flex flex-col p-4 gap-2'>
-          <h3>Enviar mail a todos</h3>
+          <h3 className='text-lg text-blue-600 font-bold'>Enviar mail a todos</h3>
           <form onSubmit={handleMailAll} className='flex flex-col gap-2'>
             <label htmlFor="mailSubjet">Asunto:</label>
             <input
@@ -224,7 +228,24 @@ const DashProjectDetail = () => {
           </form>
         </div>
       </div>
-
+      {showSuccessPopup && (
+        <div className='fixed bottom-0 left-0 right-0 top-0 flex items-center justify-center bg-gray-800 bg-opacity-50'>
+          <div className='rounded bg-white p-5 shadow-lg'>
+            <h2 className='text-lg font-bold text-green-600'>
+              Envío Exitoso
+            </h2>
+            <p>
+              Tu mail se ha enviado con éxito.
+            </p>
+            <button
+              className='mt-4 rounded bg-blue-500 px-4 py-2 text-white'
+              onClick={() => setShowSuccessPopup(false)}
+            >
+              Cerrar
+            </button>
+          </div>
+        </div>
+      )}
 
     </div>
   );

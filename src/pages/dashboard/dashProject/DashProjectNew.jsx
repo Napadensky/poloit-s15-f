@@ -6,7 +6,6 @@ import { ArrowUpTrayIcon } from '@heroicons/react/24/outline';
 import { DashConfirmModal } from '@/components/DashConfirmModal';
 import { DashSuccessModal } from '@/components/DashSuccessModal';
 import { handleChange, handleCloseModal } from '@/utils/projectUtils';
-// import { DashInputRoles } from '@/components/DashInputRoles';
 
 const DashProjectNew = () => {
   const [file, setFile] = useState(null);
