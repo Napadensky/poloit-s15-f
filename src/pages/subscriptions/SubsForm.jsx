@@ -48,7 +48,7 @@ export const SubsForm = () => {
         const emailData = {
           to: enrollmentData.mail,
           subject: 'Inscripción Exitosa',
-          text: `Hola ${enrollmentData.name},\n\nTu inscripción ha sido exitosa. Ya sos parte de PoloIT, te haremos llegar los detalles cuando termine el periodo de inscripcion.`,
+          text: `Hola ${enrollmentData.name},\n\nTu inscripción ha sido exitosa. Ya sos parte de PoloIT, te haremos llegar los detalles cuando termine el período de inscripción.`,
         };
         await triggerEmail(emailData); // Envía el correo
         setShowSuccessPopup(true);

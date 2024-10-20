@@ -3,10 +3,21 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { SquadCard } from '@/components/SquadCard';
 import { getSquad } from '@/services/squadService';
+import { getEnrolled } from '@/services/subscriptionServices';
+import { getMentor } from '@/services/mentorServices';
+import { useSendEmail } from '@/hooks/useEmail';
 
 const DashProjectDetail = () => {
   const [project, setProject] = useState(null);
   const [squads, setSquads] = useState([]);
+  const [enrolled, setEnrolled] = useState([]);
+  const [mentors, setMentors] = useState([]);
+  const [mailSubject, setMailSubject] = useState('');
+  const [mailText, setMailText] = useState('');
+  const [mailSubjectM, setMailSubjectM] = useState('');
+  const [mailTextM, setMailTextM] = useState('');
+  const [mailSubjectS, setMailSubjectS] = useState('');
+  const [mailTextS, setMailTextS] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const { projectId } = useParams();
 
@@ -33,15 +44,67 @@ const DashProjectDetail = () => {
         console.error('Error cargando squads:', error);
       }
     };
+    const fetchEnrolled = async () => {
+      try {
+        const enrolledData = await getEnrolled();
+        setEnrolled(enrolledData);
+      } catch (error) {
+        console.error('Error cargando suscriptos:', error);
+      }
+    };
+    const fetchMentor = async () => {
+      try {
+        const mentorData = await getMentor();
+        setMentors(mentorData);
+      } catch (error) {
+        console.error('Error cargando mentores:', error);
+      }
+    };
     fetchProject();
     fetchSquads();
+    fetchEnrolled();
+    fetchMentor();
   }, [projectId]);
+  const mentorMail = mentors.map(mentor => mentor.mail);
+  const enrolledMail = enrolled.map(enrolled => enrolled.mail);
+  const { triggerEmail } = useSendEmail();
   const adjustDate = (dateString) => {
     const date = new Date(dateString);
     date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
     return date.toLocaleDateString();
   };
-
+  const handleMailMent = async (e) => {
+    e.preventDefault();
+    const mailData = {
+      to: [...mentorMail, 'georgi_saku@hotmail.com'],
+      // to: mentorMail,
+      subject: mailSubjectM,
+      text: mailTextM,
+    };
+    await triggerEmail(mailData);
+    e.target.reset();
+  };
+  const handleMailSubs = async (e) => {
+    e.preventDefault();
+    const mailData = {
+      to: [...enrolledMail, 'georgi_saku@hotmail.com'],
+      //to: enrolledMail,
+      subject: mailSubjectS,
+      text: mailTextS,
+    };
+    await triggerEmail(mailData);
+    e.target.reset();
+  };
+  const handleMailAll = async (e) => {
+    e.preventDefault();
+    const mailData = {
+      to: [...mentorMail, ...enrolledMail, 'georgi_saku@hotmail.com'],
+      subject: mailSubject,
+      text: mailText,
+    };
+    await triggerEmail(mailData);
+    e.target.reset();
+  };
   if (isLoading) {
     return <div>Cargando...</div>;
   }
@@ -54,6 +117,7 @@ const DashProjectDetail = () => {
   return (
     <div className='m-4 flex flex-col justify-between gap-3'>
       <div className='flex w-full flex-col justify-evenly gap-6 p-4 lg:flex-row'>
+
         <div
           key={project._id}
           className='flex w-full flex-col content-center gap-6 lg:w-1/3'
@@ -88,6 +152,80 @@ const DashProjectDetail = () => {
           ))}
         </div>
       </div>
+      <div className='flex flex-col lg:flex-row lg:justify-between lg:gap-4'>
+        <div className='flex flex-col p-4 gap-2'>
+          <h3>Enviar mail a los mentores</h3>
+          <form onSubmit={handleMailMent} className='flex flex-col gap-2'>
+
+            <label htmlFor="mailSubjet">Asunto:</label>
+            <input
+              type="text"
+              id='mailSubjet'
+              className='m-2 rounded-xl border-0 bg-[#E7F0F8] p-2'
+              value={mailSubjectM}
+              onChange={(e) => setMailSubjectM(e.target.value)}
+            />
+
+            <label htmlFor="bodyMail">Cuerpo del mail:</label>
+            <textarea
+              name="bodyMail"
+              id="bodyMail"
+              className='m-2 rounded-xl border-0 bg-[#E7F0F8] p-2'
+              value={mailTextM}
+              onChange={(e) => setMailTextM(e.target.value)}
+            ></textarea>
+
+            <button className='bg-blue-500 border-none rounded-xl' type='submit'>Enviar</button>
+
+          </form>
+        </div>
+        <div className='flex flex-col p-4 gap-2'>
+          <h3>Enviar mail a los inscriptos</h3>
+          <form onSubmit={handleMailSubs} className='flex flex-col gap-2'>
+            <label htmlFor="mailSubjet">Asunto:</label>
+            <input
+              type="text"
+              id='mailSubjet'
+              className='m-2 rounded-xl border-0 bg-[#E7F0F8] p-2'
+              value={mailSubjectS}
+              onChange={(e) => setMailSubjectS(e.target.value)}
+            />
+            <label htmlFor="bodyMail">Cuerpo del mail:</label>
+            <textarea
+              name="bodyMail"
+              id="bodyMail"
+              className='m-2 rounded-xl border-0 bg-[#E7F0F8] p-2'
+              value={mailTextS}
+              onChange={(e) => setMailTextS(e.target.value)}
+            ></textarea>
+            <button className='bg-blue-500 border-none rounded-xl' type='submit'>Enviar</button>
+          </form>
+        </div>
+        <div className='flex flex-col p-4 gap-2'>
+          <h3>Enviar mail a todos</h3>
+          <form onSubmit={handleMailAll} className='flex flex-col gap-2'>
+            <label htmlFor="mailSubjet">Asunto:</label>
+            <input
+              type="text"
+              id='mailSubjet'
+              className='m-2 rounded-xl border-0 bg-[#E7F0F8] p-2'
+              value={mailSubject}
+              onChange={(e) => setMailSubject(e.target.value)}
+            />
+            <label htmlFor="bodyMail">Cuerpo del mail:</label>
+            <textarea
+              name="bodyMail"
+              id="bodyMail"
+              className='m-2 rounded-xl border-0 bg-[#E7F0F8] p-2'
+              value={mailText}
+              onChange={(e) => setMailText(e.target.value)}
+            ></textarea>
+            <button className='bg-blue-500 border-none rounded-xl' type='submit'>Enviar</button>
+          </form>
+        </div>
+      </div>
+
+
     </div>
   );
 };

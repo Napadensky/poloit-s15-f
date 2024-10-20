@@ -152,17 +152,6 @@ const DashProjectNew = () => {
             onChange={handleChg}
           />
         </div>
-        {/*  <div className='flex flex-col lg:justify-between lg:order-6 lg:row-span-2 '>
-          <p className='lg:text-lg text-sm font-medium'>Número de integrantes por rol:</p>
-          <div className='flex flex-row justify-between gap-3 lg:gap-6'>
-            <DashInputRoles value='uxui' text='UX/UI' />
-            <DashInputRoles value='front' text='Frontend' />
-          </div>
-          <div className='flex flex-row justify-between gap-3 lg:gap-6'>
-            <DashInputRoles value='back' text='Backend' />
-            <DashInputRoles value='testing' text='Testing QA' />
-          </div>
-        </div> */}
         <div className='lg:order-5'>
           <DashInputField
             id='startDate'
