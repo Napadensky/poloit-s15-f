@@ -6,6 +6,7 @@ import { ArrowUpTrayIcon } from '@heroicons/react/24/outline';
 import { DashConfirmModal } from '@/components/DashConfirmModal';
 import { DashSuccessModal } from '@/components/DashSuccessModal';
 import { handleChange, handleCloseModal } from '@/utils/projectUtils';
+import { DashInputRoles } from '@/components/DashInputRoles';
 
 const DashProjectEdit = () => {
   const { projectId } = useParams();
@@ -74,7 +75,11 @@ const DashProjectEdit = () => {
       formData.append('maxStudents', project.maxStudents);
       formData.append('startDate', project.startDate);
       formData.append('endDate', project.endDate);
-
+      formData.append('uxui', project.uxui);
+      formData.append('backend', project.backend);
+      formData.append('frontend', project.frontend);
+      formData.append('qa', project.qa);
+      
       if (file) {
         formData.append('img', file);
       }
@@ -149,7 +154,7 @@ const DashProjectEdit = () => {
             placeholder='Ingresar título del proyecto'
           />
         </div>
-        <div className='flex flex-col lg:order-6 lg:justify-center'>
+        <div className='flex flex-col lg:order-5 lg:justify-center'>
           <label
             htmlFor='description'
             className='text-sm font-medium lg:text-lg'
@@ -179,7 +184,7 @@ const DashProjectEdit = () => {
             onChange={handleChg}
           />
         </div>
-        <div className='lg:order-5'>
+        <div className='lg:order-6'>
           <DashInputField
             id='startDate'
             type='date'
@@ -193,7 +198,8 @@ const DashProjectEdit = () => {
             value={project.startDate || ''}
           />
         </div>
-        <div className='lg:order-7'>
+        
+        <div className='lg:order-8'>
           <DashInputField
             id='endDate'
             type='date'
@@ -207,7 +213,17 @@ const DashProjectEdit = () => {
             value={project.endDate || ''}
           />
         </div>
-
+        <div className='flex flex-col lg:justify-between lg:order-7 lg:row-span-2 '>
+          <p className='lg:text-lg text-sm font-medium'>Número de integrantes por rol:</p>
+          <div className='flex flex-row justify-between gap-3 lg:gap-6'>
+            <DashInputRoles value='uxui' text='UX/UI' input={project.uxui} onChange={handleChg}/>
+            <DashInputRoles value='frontend' text='Frontend' input={project.frontend} onChange={handleChg}/>
+          </div>
+          <div className='flex flex-row justify-between gap-3 lg:gap-6'>
+            <DashInputRoles value='backend' text='Backend' input={project.backend} onChange={handleChg}/>
+            <DashInputRoles value='qa' text='Testing QA'input={project.qa} onChange={handleChg} />
+          </div>
+        </div>
         <div className='mb-auto lg:order-1 lg:row-span-3'>
           <h2 className='my-2 text-sm font-medium lg:hidden'>
             Imagen del proyecto (*.png, *.jpg, *.jepg)
@@ -237,7 +253,7 @@ const DashProjectEdit = () => {
             />
           </div>
         </div>
-        <div className='flex w-full flex-row justify-between lg:order-8 lg:ml-auto lg:mt-auto lg:h-fit lg:w-[28rem]'>
+        <div className='flex w-full flex-row justify-between lg:order-9 lg:ml-auto lg:mt-auto lg:h-fit lg:w-[28rem]'>
           <button
             type='button'
             onClick={handleCancel}

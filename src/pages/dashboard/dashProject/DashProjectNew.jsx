@@ -126,7 +126,7 @@ const DashProjectNew = () => {
             placeholder='Ingresar título del proyecto'
           />
         </div>
-        <div className='flex flex-col lg:order-6 lg:justify-center'>
+        <div className='flex flex-col lg:order-5 lg:justify-center'>
           <label
             htmlFor='description'
             className='text-sm font-medium lg:text-lg'
@@ -156,7 +156,7 @@ const DashProjectNew = () => {
             onChange={handleChg}
           />
         </div>
-        <div className='lg:order-5'>
+        <div className='lg:order-6'>
           <DashInputField
             id='startDate'
             type='date'
@@ -170,7 +170,7 @@ const DashProjectNew = () => {
             value={project.startDate}
           />
         </div>
-        <div className='lg:order-7'>
+        <div className='lg:order-8'>
           <DashInputField
             id='endDate'
             type='date'
@@ -184,7 +184,7 @@ const DashProjectNew = () => {
             value={project.endDate}
           />
         </div>
-        <div className='flex flex-col lg:justify-between lg:order-6 lg:row-span-2 '>
+        <div className='flex flex-col lg:justify-between lg:order-7 lg:row-span-2 '>
           <p className='lg:text-lg text-sm font-medium'>Número de integrantes por rol:</p>
           <div className='flex flex-row justify-between gap-3 lg:gap-6'>
             <DashInputRoles value='uxui' text='UX/UI' input={project.uxui} onChange={handleChg}/>
@@ -225,7 +225,7 @@ const DashProjectNew = () => {
             />
           </div>
         </div>
-        <div className='flex w-full flex-row justify-between lg:order-8 lg:ml-auto lg:mt-auto lg:h-fit lg:w-[28rem]'>
+        <div className='flex w-full flex-row justify-between lg:order-9 lg:ml-auto lg:mt-auto lg:h-fit lg:w-[28rem]'>
           <button
             type='button'
             onClick={handleCancel}
