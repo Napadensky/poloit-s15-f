@@ -15,6 +15,9 @@ const DashLayout = () => {
           <h2 className='mb-4 text-xl font-bold'>Sidebar</h2>
           {/* Agrega aquí los elementos del sidebar */}
           <nav className='flex flex-col space-y-2'>
+            <Link to='/dashboard' className='rounded p-2 hover:bg-gray-200'>
+              Proyectos
+            </Link>
             <Link to='mentors' className='rounded p-2 hover:bg-gray-200'>
               Mentores
             </Link>
