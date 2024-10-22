@@ -1,4 +1,4 @@
-import { SubsNavBar } from '@/components/SubsNavBar';
+import { SubsNavBar } from '@/components/SubsNavbar';
 import { Outlet } from 'react-router-dom';
 
 const SubsLayout = () => {
