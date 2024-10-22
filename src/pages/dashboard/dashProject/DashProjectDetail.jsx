@@ -149,8 +149,8 @@ const DashProjectDetail = () => {
           </p>
         </div>
         <div className='flex w-full flex-col gap-3 lg:w-1/3'>
-          {relatedSquads.map((squad) => (
-            <SquadCard key={squad._id} squad={squad} />
+          {relatedSquads.map((squad, index) => (
+            <SquadCard key={squad._id} squad={squad} index={index}/>
           ))}
         </div>
       </div>
