@@ -1,10 +1,17 @@
-import { useState } from 'react';
-import { createEnrolled } from '../services/subscriptionServices';
+import { useEffect, useState } from 'react';
+import { createEnrolled, getEnrolled } from '../services/subscriptionServices';
 
 export const useEnroll = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    getEnrolled().then((res) => {
+      setData(res);
+    });
+  }, []);
 
   const enroll = async (enrollmentData) => {
     setLoading(true);
@@ -22,5 +29,5 @@ export const useEnroll = () => {
     }
   };
 
-  return { enroll, loading, error, success };
+  return { enroll, loading, error, success, data };
 };

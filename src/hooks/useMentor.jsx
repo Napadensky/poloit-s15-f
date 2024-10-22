@@ -1,12 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { createMentor } from '../services/mentorServices';
+import { createMentor, getMentor } from '../services/mentorServices';
 
 export const useMentor = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+  const [data, setData] = useState([]);
 
+  useEffect(() => {
+    getMentor().then((res) => {
+      setData(res);
+    });
+  }, []);
   const mentor = async (mentorData) => {
     setLoading(true);
     setError(null);
@@ -22,5 +28,5 @@ export const useMentor = () => {
       setLoading(false);
     }
   };
-  return { mentor, loading, error, success };
+  return { mentor, loading, error, success, data };
 };

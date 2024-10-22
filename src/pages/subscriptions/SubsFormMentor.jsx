@@ -110,13 +110,15 @@ export const SubsFormMentor = () => {
         />
 
         <SubsInputSelect
-          placeholder={'Seleccione el nombre de su ONG'}
-          textLabel={'Ong'}
+          placeholder={'Seleccione el nombre de su empresa'}
+          textLabel={'Empresa asociada'}
           id={'ong'}
           options={[
-            { text: 'Talento tech', value: 'Talento tech' },
-            { text: 'Silver tech', value: 'Silver tech' },
-            { text: 'Forge', value: 'Forge' },
+            { text: 'Epidata', value: 'Epidata' },
+            { text: 'Globant', value: 'Globant' },
+            { text: 'Gire', value: 'Gire' },
+            { text: 'Prisma', value: 'Prisma' },
+            { text: 'MindHub', value: 'MindHub' },
           ]}
         />
 
