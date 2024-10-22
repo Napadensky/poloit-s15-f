@@ -29,8 +29,7 @@ export const LoginForm = () => {
     const tokenFromLocalStorage = localStorage.getItem('token');
     if (tokenFromLocalStorage) {
       try {
-        const decodedToken = jwtDecode(tokenFromLocalStorage);
-        console.log({ decodedToken });
+        const decodedToken = jwtDecode(tokenFromLocalStorage); 
         setLocalToken(tokenFromLocalStorage);
         navigate('/dashboard');
       } catch (err) {

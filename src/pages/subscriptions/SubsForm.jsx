@@ -38,10 +38,8 @@ export const SubsForm = () => {
     };
 
     try {
-      const result = await enroll(enrollmentData); // Guarda la inscripción
-      console.log('Resultado de la inscripción:', result);
-
-      console.log(enrollmentData.mail);
+      const result = await enroll(enrollmentData); // Guarda la inscripción 
+ 
 
       // Solo envía el correo si la inscripción fue exitosa
       if (result) {
@@ -55,7 +53,7 @@ export const SubsForm = () => {
         e.target.reset(); // Limpia el formulario
       }
     } catch (err) {
-      console.log('Error al inscribir:', err);
+      console.error('Error al inscribir:', err);
     }
   };
 

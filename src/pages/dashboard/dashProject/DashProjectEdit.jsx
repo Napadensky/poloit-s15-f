@@ -82,8 +82,7 @@ const DashProjectEdit = () => {
       
       if (file) {
         formData.append('img', file);
-      }
-      console.log('Form Data:', Array.from(formData.entries())); 
+      } 
       const updatedProject = await updateProjectById(projectId, formData);
       if (updatedProject.startDate) {
         updatedProject.startDate = new Date(updatedProject.startDate)
@@ -107,8 +106,7 @@ const DashProjectEdit = () => {
     setConfirmation(false);
   };
   const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    console.log('archivo seleccionado:', selectedFile);
+    const selectedFile = e.target.files[0]; 
     if (selectedFile) {
       setFile(selectedFile);
       setPreview(URL.createObjectURL(selectedFile));

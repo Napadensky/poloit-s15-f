@@ -8,12 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 export const SubsFormMentor = () => {
   const navigate = useNavigate();
-  const {
-    projects,
-    loading: loadingProjects,
-    error: errorProjects,
-    fetchProjects,
-  } = useProject();
+  const { projects } = useProject();
 
   const { mentor, loading, error, success } = useMentor();
   const { triggerEmail } = useSendEmail();
@@ -35,9 +30,6 @@ export const SubsFormMentor = () => {
 
     try {
       const result = await mentor(mentorData); // Guarda la inscripción
-      console.log('Resultado de la inscripción:', result);
-
-      console.log(mentorData.mail);
 
       // Solo envía el correo si la inscripción fue exitosa
       if (result) {
@@ -51,7 +43,7 @@ export const SubsFormMentor = () => {
         e.target.reset(); // Limpia el formulario
       }
     } catch (err) {
-      console.log('Error al inscribir:', err);
+      console.error('Error al inscribir:', err);
     }
   };
   const handleCancel = () => {

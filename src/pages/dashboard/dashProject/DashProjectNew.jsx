@@ -19,11 +19,11 @@ const DashProjectNew = () => {
     active: false,
     startDate: '',
     endDate: '',
-    uxui:'',
+    uxui: '',
     backend: '',
     frontend: '',
     qa: '',
-    };
+  };
   const [project, setProject] = useState(InitialProject);
   const [modal, setModal] = useState(false);
   const [confirmation, setConfirmation] = useState(false);
@@ -49,7 +49,7 @@ const DashProjectNew = () => {
       'maxStudents',
       'startDate',
       'endDate',
-      ];
+    ];
     const camposVacios = camposRequeridos.filter((campo) => !project[campo]);
     if (camposVacios.length > 0 || !file) {
       alert('Falta completar campos obligatorios');
@@ -72,17 +72,15 @@ const DashProjectNew = () => {
       formData.append('img', file, file.name);
 
       formData.set('active', 'true');
-      //console.log('Proyecto creado:', formData.entries());
-     const newProject = await createProject(formData);
+      await createProject(formData);
 
-    console.log('Proyecto creado:', newProject);
       setModal(true);
       setConfirmation(false);
     } catch (error) {
       console.error('Error al crear el proyecto:', error);
     }
   };
- // const handleCMdl = () => handleCloseModal(setModal, redirigir);
+  // const handleCMdl = () => handleCloseModal(setModal, redirigir);
   const handleCancelar = () => {
     setConfirmation(false);
   };
@@ -184,15 +182,37 @@ const DashProjectNew = () => {
             value={project.endDate}
           />
         </div>
-        <div className='flex flex-col lg:justify-between lg:order-7 lg:row-span-2 '>
-          <p className='lg:text-lg text-sm font-medium'>Número de integrantes por rol:</p>
+        <div className='flex flex-col lg:order-7 lg:row-span-2 lg:justify-between'>
+          <p className='text-sm font-medium lg:text-lg'>
+            Número de integrantes por rol:
+          </p>
           <div className='flex flex-row justify-between gap-3 lg:gap-6'>
-            <DashInputRoles value='uxui' text='UX/UI' input={project.uxui} onChange={handleChg}/>
-            <DashInputRoles value='frontend' text='Frontend' input={project.frontend} onChange={handleChg}/>
+            <DashInputRoles
+              value='uxui'
+              text='UX/UI'
+              input={project.uxui}
+              onChange={handleChg}
+            />
+            <DashInputRoles
+              value='frontend'
+              text='Frontend'
+              input={project.frontend}
+              onChange={handleChg}
+            />
           </div>
           <div className='flex flex-row justify-between gap-3 lg:gap-6'>
-            <DashInputRoles value='backend' text='Backend' input={project.backend} onChange={handleChg}/>
-            <DashInputRoles value='qa' text='Testing QA'input={project.qa} onChange={handleChg} />
+            <DashInputRoles
+              value='backend'
+              text='Backend'
+              input={project.backend}
+              onChange={handleChg}
+            />
+            <DashInputRoles
+              value='qa'
+              text='Testing QA'
+              input={project.qa}
+              onChange={handleChg}
+            />
           </div>
         </div>
 
